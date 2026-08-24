@@ -34,11 +34,36 @@ e-comshield/
 │   ├── 02_limpeza.py     # aplica as decisões de limpeza e gera data/processed/
 │   ├── agent.py          # lógica do agente (memória e tool calling) — próxima etapa
 │   └── data/             # datasets brutos e tratados (não versionados, ver seção "Datasets")
-├── backend/              # Parte de Backend & Segurança (Integrante B) — FastAPI + JWT
-│   └── app/
-│       ├── api/routes/   # health, auth, predict
-│       ├── security/     # JWT, senha, dependências de autenticação
-│       └── core/
+├── backend/                       # API/backend (Integrante B)
+│   ├── app/
+│   │   ├── __init__.py
+│   │   ├── main.py
+│   │   │
+│   │   ├── api/
+│   │   │   ├── __init__.py
+│   │   │   └── routes/
+│   │   │       ├── __init__.py
+│   │   │       ├── health.py
+│   │   │       ├── auth.py
+│   │   │       └── predict.py
+│   │   │
+│   │   ├── core/
+│   │   │   ├── __init__.py
+│   │   │   └── config.py
+│   │   │
+│   │   ├── schemas/
+│   │   │   ├── __init__.py
+│   │   │   └── predict.py
+│   │   │
+│   │   └── security/
+│   │       ├── __init__.py
+│   │       ├── jwt.py
+│   │       ├── password.py
+│   │       └── dependencies.py
+│   │
+│   ├── .env.example
+│   ├── requirements.txt
+│   └── ...
 ├── docs/
 │   ├── escolha_dataset.md
 │   └── contrato_agente_backend.md
@@ -70,22 +95,32 @@ e-comshield/
 1. Entrar na pasta `backend/` e criar/ativar um ambiente virtual Python:
    ```
    cd backend
-   python -m venv venv
-   venv\Scripts\activate        # Windows (PowerShell/cmd)
-   source venv/bin/activate     # Linux/macOS
+   python -m venv .venv
+   .venv\Scripts\Activate.ps1 ou .venv\Scripts\activate       # Windows (PowerShell/cmd)
+   source .venv/bin/activate     # Linux/macOS
    ```
 2. Instalar as dependências:
    ```
    pip install -r requirements.txt
    ```
-3. Copiar `.env.example` para `.env` e preencher a `SECRET_KEY` (usada para assinar o JWT).
+3. Criar o arquivo `.env` a partir do `.env.example` e preencher a `SECRET_KEY`, utilizada para assinar os tokens JWT.
+
+   Uma nova chave pode ser gerada localmente com:
+
+   ```
+   python -c "import secrets; print(secrets.token_urlsafe(32))"
+   ```
+   Copie o valor retornado e adicione ao arquivo .env
 4. Rodar a API:
    ```
    uvicorn app.main:app --reload
    ```
-5. A API sobe por padrão em `http://127.0.0.1:8000`. Rotas disponíveis: `GET /health` (sem
-   autenticação), `POST /auth/token` (login, retorna o token JWT), `POST /predict` (protegida —
-   requer `Authorization: Bearer <token>`, retorna 401 sem token válido).
+5. A API sobe por padrão em `http://127.0.0.1:8000`.
+
+Rotas disponíveis:
+- `GET /health` — verifica a disponibilidade da API e não requer autenticação.
+- `POST /auth/token` — autentica o usuário e retorna um token JWT.
+- `POST /predict` — protegida por JWT; recebe a mensagem do usuário e retorna uma resposta placeholder enquanto o Agent não está integrado.
 
 ## Datasets
 
