@@ -218,8 +218,8 @@ Interface definida entre a parte de Dados/IA (agente) e a parte de Backend/API, 
 - [x] Decisões de limpeza aplicadas (`agent/02_limpeza.py`) e datasets tratados salvos em `agent/data/processed/`
 - [x] Estrutura FastAPI + JWT + 3 rotas (Tarefa 4 — Integrante B): `GET /health`, `POST /auth/token`,
       `POST /predict` (protegida por JWT) implementadas em `backend/app/`
-- [ ] DFD + tríade CIA (Tarefa 5 — conjunto)
-- [ ] Publicação no Git com README completo (Tarefa 6 — em andamento)
+- [x] DFD + tríade CIA (Tarefa 5 — conjunto)
+- [x] Publicação no Git com README completo (Tarefa 6 — em andamento)
 
 ## Próximos passos
 
