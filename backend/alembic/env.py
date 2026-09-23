@@ -24,6 +24,7 @@ if config.config_file_name is not None:
 from app.core.config import settings
 from app.db.base import Base
 from app.models import User
+from app.models.order import Order
 
 target_metadata = Base.metadata
 

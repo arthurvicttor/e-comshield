@@ -1,11 +1,9 @@
 from collections.abc import Generator
 
-from app.db.session import SessionLocal
+from sqlmodel import Session
 
-def get_db() -> Generator:
-    db = SessionLocal()
+from app.db.session import get_session
 
-    try:
-        yield db
-    finally:
-        db.close()
+
+def get_db() -> Generator[Session, None, None]:
+    yield from get_session()
