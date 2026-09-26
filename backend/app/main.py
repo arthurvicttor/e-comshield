@@ -46,10 +46,11 @@ async def security_headers(request: Request, call_next):
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["Content-Security-Policy"] = (
     "default-src 'self'; "
-    "script-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; "
-    "style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; "
+    "script-src 'self' https://cdn.jsdelivr.net 'sha256-QOOQu4W1oxGqd2nbXbxiA1Di6OHQOLQD+o+G9oWL8YY='; "
+    "style-src 'self' https://cdn.jsdelivr.net; "
     "img-src 'self' data: https://fastapi.tiangolo.com; "
     "connect-src 'self' https://cdn.jsdelivr.net; "
+    "form-action 'self'; "
     "frame-ancestors 'none'"
 )
 
