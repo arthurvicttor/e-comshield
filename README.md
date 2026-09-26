@@ -83,6 +83,10 @@ e-comshield/
 │   ├── requirements.txt
 │   └── ...
 ├── docs/
+|     └── security/
+│       ├── analise-zap.md
+│       ├── testes-seguranca.md
+│       └── owasp-zap-report.html
 │   ├── escolha_dataset.md
 │   └── contrato_agente_backend.md
 ├── README.md
