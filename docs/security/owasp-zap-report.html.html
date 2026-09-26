@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZAP by Checkmarx Scanning Report</title>
+<link href="./ZAP by Checkmarx Scanning Report_files/normalize.css" rel="stylesheet">
+<link href="./ZAP by Checkmarx Scanning Report_files/main.css" rel="stylesheet">
+<link href="./ZAP by Checkmarx Scanning Report_files/colors.css" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<h1>ZAP by Checkmarx Scanning Report</h1>
+		<p>
+			<span>Generated with</span> <a href="https://zaproxy.org/"><img src="./ZAP by Checkmarx Scanning Report_files/zap32x32.png" alt="The ZAP logo" class="zap-logo">ZAP</a>
+			<span>on sáb. 26 set. 2026, at 10:43:52</span>
+		</p>
+		<p>ZAP Version: 2.17.0</p>
+		<p>
+			ZAP by <a href="https://checkmarx.com/">Checkmarx</a>
+		</p>
+	</header>
+
+	<main>
+
+		<section id="contents" class="contents">
+			<h2>Contents</h2>
+			<nav>
+				<ol>
+					<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#about-this-report">About This Report</a>
+						<ol>
+							
+							<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#report-parameters">Report Parameters</a></li>
+						</ol></li>
+					<data-th-block>
+					<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#summaries">Summaries</a>
+						<ol>
+							<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#risk-confidence-counts">Alert Counts by Risk and Confidence</a></li>
+							<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#site-risk-counts">Alert Counts by Site and Risk</a></li>
+							<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#alert-type-counts">Alert Counts by Alert Type</a></li>
+							<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#insights">Insights</a></li>
+						</ol></li>
+					<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#alerts">Alerts</a>
+						<ol>
+							
+							 
+							
+							
+							
+							
+							<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#alerts--risk-2-confidence-3"><span>Risk</span>=<span class="risk-level">Médio</span>, <span>Confidence</span>=<span class="confidence-level">Alto</span> <span>(1)</span></a></li>
+							
+							
+							
+							
+							  
+							
+							
+							
+							
+							
+							
+							<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#alerts--risk-1-confidence-2"><span>Risk</span>=<span class="risk-level">Baixo</span>, <span>Confidence</span>=<span class="confidence-level">Médio</span> <span>(1)</span></a></li>
+							
+							
+							  
+							
+							
+							
+							
+							
+							
+							<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#alerts--risk-0-confidence-2"><span>Risk</span>=<span class="risk-level">Informativo</span>, <span>Confidence</span>=<span class="confidence-level">Médio</span> <span>(1)</span></a></li>
+							
+							
+							  
+						</ol></li>
+					<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#appendix">Appendix</a>
+						<ol>
+							<li><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#alert-types">Alert Types</a></li>
+						</ol></li>
+					</data-th-block>
+				</ol>
+			</nav>
+		</section>
+
+		<section id="about-this-report" class="about-this-report">
+			<h2>About This Report</h2>
+
+			
+
+			<section id="report-parameters">
+				<h3>Report Parameters</h3>
+				<div class="report-parameters--container">
+					<h4>Contexts</h4>
+					
+					
+					<p>No contexts were selected, so all contexts were included by default.</p>
+					  
+
+					<h4>Sites</h4>
+					
+					<p>The following sites were included:</p>
+					<ul class="sites-list">
+						<li><span class="site">http://127.0.0.1:8000</span></li>
+					</ul>
+					
+					<p>(If no sites were selected, all sites were included by default.)</p>
+					<p>An included site must also be within one of the included contexts for its data to be included in the report.</p>
+
+					<h4>Risk levels</h4>
+					<p>
+						<span>Included</span>:
+						 
+						<span class="included-risk-codes"><span class="risk-level">Alto</span>, <span class="risk-level">Médio</span>, <span class="risk-level">Baixo</span>, <span class="risk-level">Informativo</span></span>
+					</p>
+					<p>
+						<span>Excluded</span>:
+						 <span>None</span>
+						
+					</p>
+
+					<h4>Confidence levels</h4>
+					<p>
+						<span>Included</span>:
+						
+						
+						<span class="included-confidence-codes"><span class="confidence-level">User Confirmed</span>, <span class="confidence-level">Alto</span>, <span class="confidence-level">Médio</span>, <span class="confidence-level">Baixo</span></span>
+					</p>
+					<p>
+						<span>Excluded</span>:
+						
+						
+						<span class="included-confidence-codes"> <span class="confidence-level">User Confirmed</span>, <span class="confidence-level">Alto</span>, <span class="confidence-level">Médio</span>, <span class="confidence-level">Baixo</span>, <span class="confidence-level">Falso Positivo</span></span>
+					</p>
+				</div>
+			</section>
+		</section>
+
+		
+		<section>
+			
+		</section>
+		
+		<section id="summaries" class="summaries">
+			<h2>Summaries</h2>
+
+			<section id="risk-confidence-counts">
+				<h3>Alert Counts by Risk and Confidence</h3>
+				<table class="risk-confidence-counts-table">
+					<caption>
+						<p>This table shows the number of alerts for each level of risk and confidence included in the report.</p>
+						<p>(The percentages in brackets represent the count as a percentage of the total number of alerts included in the report, rounded to one decimal place.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col style="width: 14.0%"><col style="width: 14.0%"><col style="width: 14.0%"><col style="width: 14.0%">
+						<col style="width: 14.0%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup" colspan="5">Confidence</th>
+						</tr>
+						<tr>
+							<th scope="col">User Confirmed</th>
+							<th scope="col">Alto</th>
+							<th scope="col">Médio</th>
+							<th scope="col">Baixo</th>
+							<th scope="col">Total</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup" rowspan="5">Risk</th>
+							<th scope="row">Alto</th>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Médio</th>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(33,3%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(33,3%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Baixo</th>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(33,3%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(33,3%)</span></td>
+						</tr>
+						<tr>
+							
+							<th scope="row">Informativo</th>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(33,3%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(33,3%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row">Total</th>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(33,3%)</span></td>
+							<td><span>2</span><br> <span class="additional-info-percentages">(66,7%)</span></td>
+							<td><span>0</span><br> <span class="additional-info-percentages">(0,0%)</span></td>
+							<td><span>3</span><br> <span class="additional-info-percentages">(100%)</span></td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section id="site-risk-counts">
+				<h3>Alert Counts by Site and Risk</h3>
+				<table class="site-risk-counts-table">
+					<caption>
+						<p>This table shows, for each site for which one or more alerts were raised, the number of alerts raised at each risk level.</p>
+						<p>Alerts with a confidence level of "False Positive" have been excluded from these counts.</p>
+						<p>(The numbers in brackets are the number of alerts raised for the site at or above that risk level.)</p>
+					</caption>
+					<colgroup>
+						<col>
+						<col>
+					</colgroup>
+					<colgroup>
+						<col style="width: 16.25%"><col style="width: 16.25%"><col style="width: 16.25%"><col style="width: 16.25%">
+					</colgroup>
+					<thead>
+						<tr>
+							<td colspan="2" rowspan="2"></td>
+							<th scope="colgroup" colspan="4">Risk</th>
+						</tr>
+						<tr>
+							<th scope="col">
+								<span>Alto</span><br>  <span class="additional-info-percentages">(= Alto)</span>  
+							</th>
+							<th scope="col">
+								<span>Médio</span><br>   <span class="additional-info-percentages">(&gt;= Médio)</span> 
+							</th>
+							<th scope="col">
+								<span>Baixo</span><br>   <span class="additional-info-percentages">(&gt;= Baixo)</span> 
+							</th>
+							<th scope="col">
+								<span>Informativo</span><br>   <span class="additional-info-percentages">(&gt;= Informativo)</span> 
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="rowgroup" rowspan="1">Site</th>
+							<th scope="row">http://127.0.0.1:8000</th>
+							
+							<td><span>0</span><br> <span class="additional-info-percentages">(0)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(1)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(2)</span></td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(3)</span></td>
+							
+						</tr>
+					</tbody>
+				</table>
+			</section>
+
+			<section id="alert-type-counts">
+				<h3>Alert Counts by Alert Type</h3>
+				<table class="alert-type-counts-table">
+					<caption>
+						<p>This table shows the number of alerts of each alert type, together with the alert type's risk level.</p>
+						<p>(The percentages in brackets represent each count as a percentage, rounded to one decimal place, of the total number of alerts included in this report.)</p>
+					</caption>
+					<thead>
+						<tr>
+							<th scope="col">Alert type</th>
+							<th scope="col">Risk</th>
+							<th scope="col">Count</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row"><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#alert-type-0">Sub Resource Integrity Attribute Missing</a></th>
+							<td class="risk-level">Médio</td>
+							<td><span>2</span><br> <span class="additional-info-percentages">(66,7%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#alert-type-1">Cross-Domain JavaScript Source File Inclusion</a></th>
+							<td class="risk-level">Baixo</td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(33,3%)</span></td>
+						</tr>
+						<tr>
+							<th scope="row"><a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#alert-type-2">Modern Web Application</a></th>
+							<td class="risk-level">Informativo</td>
+							<td><span>1</span><br> <span class="additional-info-percentages">(33,3%)</span></td>
+						</tr>
+					</tbody>
+					<tfoot>
+						<tr>
+							<th scope="row">Total</th>
+							<td></td>
+							<td>3</td>
+						</tr>
+					</tfoot>
+				</table>
+			</section>
+			
+			<section id="insights">
+				<h3 class="left-header">Insights</h3>
+				
+				<table class="insights-table">
+						<caption>
+						<p>This table shows information that is likely to be very relevant to you, but which is not related to vulnerabilities, or potentially even related to the application in question.</p>
+					</caption>
+					<thead>
+					<tr>
+						<th scope="col">Level</th>
+						<th scope="col">Motivo</th>
+						<th scope="col">Site</th>
+						<th scope="col">Descrição</th>
+						<th scope="col">Statistic</th>
+					</tr>
+					</thead>
+					<tbody>
+					
+						<tr>
+						<td class="risk-1">
+							<div>Baixo</div>
+						</td>
+						<td>
+							<div>Atenção</div>
+						</td>
+						<td>
+							<div></div>
+						</td>
+						<td>
+							<div>ZAP errors logged - see the zap.log file for details</div>
+						</td>
+						<td align="center">
+							<div>1   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-1">
+							<div>Baixo</div>
+						</td>
+						<td>
+							<div>Atenção</div>
+						</td>
+						<td>
+							<div></div>
+						</td>
+						<td>
+							<div>ZAP warnings logged - see the zap.log file for details</div>
+						</td>
+						<td align="center">
+							<div>1   </div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Informações</div>
+						</td>
+						<td>
+							<div>Informativo</div>
+						</td>
+						<td>
+							<div>http://127.0.0.1:8000</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 2xx</div>
+						</td>
+						<td align="center">
+							<div>28 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Informações</div>
+						</td>
+						<td>
+							<div>Informativo</div>
+						</td>
+						<td>
+							<div>http://127.0.0.1:8000</div>
+						</td>
+						<td>
+							<div>Percentage of responses with status code 4xx</div>
+						</td>
+						<td align="center">
+							<div>71 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Informações</div>
+						</td>
+						<td>
+							<div>Informativo</div>
+						</td>
+						<td>
+							<div>http://127.0.0.1:8000</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type application/json</div>
+						</td>
+						<td align="center">
+							<div>66 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Informações</div>
+						</td>
+						<td>
+							<div>Informativo</div>
+						</td>
+						<td>
+							<div>http://127.0.0.1:8000</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with content type text/html</div>
+						</td>
+						<td align="center">
+							<div>33 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Informações</div>
+						</td>
+						<td>
+							<div>Informativo</div>
+						</td>
+						<td>
+							<div>http://127.0.0.1:8000</div>
+						</td>
+						<td>
+							<div>Percentage of endpoints with method GET</div>
+						</td>
+						<td align="center">
+							<div>100 %</div>
+						</td>
+						</tr>
+					
+						<tr>
+						<td class="risk-0">
+							<div>Informações</div>
+						</td>
+						<td>
+							<div>Informativo</div>
+						</td>
+						<td>
+							<div>http://127.0.0.1:8000</div>
+						</td>
+						<td>
+							<div>Count of total endpoints</div>
+						</td>
+						<td align="center">
+							<div>3   </div>
+						</td>
+						</tr>
+					
+					</tbody>
+				</table>
+			</section>
+		</section>
+
+		<section id="alerts" class="alerts">
+			<h2>Alerts</h2>
+			<ol>
+				
+				 
+				 
+				
+				
+				<li id="alerts--risk-2-confidence-3">
+					<h3>
+						<span>Risk</span>=<span class="risk-level">Médio</span>, <span>Confidence</span>=<span class="confidence-level">Alto</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">http://127.0.0.1:8000</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#alert-type-0">Sub Resource Integrity Attribute Missing</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET http://127.0.0.1:8000/docs</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tbody><tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/345.html">CWE-345</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/2021/A05_2021-Security_Misconfiguration/">OWASP_2021_A05</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration.html">OWASP_2017_A06</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/2025/A02_2025-Security_Misconfiguration/">OWASP_2025_A02</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_DEV_STD = </span>
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The integrity attribute is missing on a script or link tag served by an external server. The integrity tag prevents an attacker who have gained access to this server from injecting a malicious content.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (233 bytes)</summary>
+				
+				<pre><code>GET http://127.0.0.1:8000/docs HTTP/1.1
+host: 127.0.0.1:8000
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (581 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+date: Sat, 26 Sep 2026 13:13:54 GMT
+server: uvicorn
+content-length: 1014
+content-type: text/html; charset=utf-8
+strict-transport-security: max-age=31536000; includeSubDomains
+x-frame-options: DENY
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'sha256-QOOQu4W1oxGqd2nbXbxiA1Di6OHQOLQD+o+G9oWL8YY='; style-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://fastapi.tiangolo.com; connect-src 'self' https://cdn.jsdelivr.net; form-action 'self'; frame-ancestors 'none'
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (1014 bytes)</summary>
+				
+				<pre><code>
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css"&gt;
+    &lt;link rel="shortcut icon" href="https://fastapi.tiangolo.com/img/favicon.png"&gt;
+    &lt;title&gt;E-ComShield API - Swagger UI&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;div id="swagger-ui"&gt;
+    &lt;/div&gt;
+    &lt;script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"&gt;&lt;/script&gt;
+    &lt;!-- `SwaggerUIBundle` is now available on the page --&gt;
+    &lt;script&gt;
+    const ui = SwaggerUIBundle({
+        url: '/openapi.json',
+    "dom_id": "#swagger-ui",
+"layout": "BaseLayout",
+"deepLinking": true,
+"showExtensions": true,
+"showCommonExtensions": true,
+oauth2RedirectUrl: window.location.origin + '/docs/oauth2-redirect',
+    presets: [
+        SwaggerUIBundle.presets.apis,
+        SwaggerUIBundle.SwaggerUIStandalonePreset
+        ],
+    })
+    &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+    </code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>&lt;link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css"&gt;</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Provide a valid integrity attribute to the tag.</p>
+ </td>
+	</tr>
+</tbody></table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				
+				
+				
+				  
+				 
+				
+				
+				
+				
+				<li id="alerts--risk-1-confidence-2">
+					<h3>
+						<span>Risk</span>=<span class="risk-level">Baixo</span>, <span>Confidence</span>=<span class="confidence-level">Médio</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">http://127.0.0.1:8000</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#alert-type-1">Cross-Domain JavaScript Source File Inclusion</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET http://127.0.0.1:8000/docs</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tbody><tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					<span><a href="https://owasp.org/Top10/2025/A08_2025-Software_or_Data_Integrity_Failures/">OWASP_2025_A08</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					<span><a href="https://owasp.org/Top10/2021/A08_2021-Software_and_Data_Integrity_Failures/">OWASP_2021_A08</a></span> 
+				</li>
+				<li>
+					<span><a href="https://cwe.mitre.org/data/definitions/829.html">CWE-829</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_DEV_STD = </span>
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The page includes one or more script files from a third-party domain.</p>
+ </td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (233 bytes)</summary>
+				
+				<pre><code>GET http://127.0.0.1:8000/docs HTTP/1.1
+host: 127.0.0.1:8000
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (581 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+date: Sat, 26 Sep 2026 13:13:54 GMT
+server: uvicorn
+content-length: 1014
+content-type: text/html; charset=utf-8
+strict-transport-security: max-age=31536000; includeSubDomains
+x-frame-options: DENY
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'sha256-QOOQu4W1oxGqd2nbXbxiA1Di6OHQOLQD+o+G9oWL8YY='; style-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://fastapi.tiangolo.com; connect-src 'self' https://cdn.jsdelivr.net; form-action 'self'; frame-ancestors 'none'
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (1014 bytes)</summary>
+				
+				<pre><code>
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css"&gt;
+    &lt;link rel="shortcut icon" href="https://fastapi.tiangolo.com/img/favicon.png"&gt;
+    &lt;title&gt;E-ComShield API - Swagger UI&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;div id="swagger-ui"&gt;
+    &lt;/div&gt;
+    &lt;script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"&gt;&lt;/script&gt;
+    &lt;!-- `SwaggerUIBundle` is now available on the page --&gt;
+    &lt;script&gt;
+    const ui = SwaggerUIBundle({
+        url: '/openapi.json',
+    "dom_id": "#swagger-ui",
+"layout": "BaseLayout",
+"deepLinking": true,
+"showExtensions": true,
+"showCommonExtensions": true,
+oauth2RedirectUrl: window.location.origin + '/docs/oauth2-redirect',
+    presets: [
+        SwaggerUIBundle.presets.apis,
+        SwaggerUIBundle.SwaggerUIStandalonePreset
+        ],
+    })
+    &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+    </code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Parameter</th>
+		<td><pre><code>https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js</code></pre></td>
+	</tr>
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"&gt;&lt;/script&gt;</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>Ensure JavaScript source files are loaded from only trusted sources, and the sources can't be controlled by end users of the application.</p>
+ </td>
+	</tr>
+</tbody></table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				
+				  
+				 
+				
+				
+				
+				
+				<li id="alerts--risk-0-confidence-2">
+					<h3>
+						<span>Risk</span>=<span class="risk-level">Informativo</span>, <span>Confidence</span>=<span class="confidence-level">Médio</span> <span>(1)</span>
+					</h3>
+					<ol>
+						
+						<li class="alerts--site-li">
+							<h4>
+								<span class="site">http://127.0.0.1:8000</span> <span>(1)</span>
+							</h4>
+							<ol>
+								
+								<li>
+									<h5>
+										<a href="file:///C:/Users/Arthur%20Victor/2026-09-26-ZAP-Report-.html#alert-type-2">Modern Web Application</a> <span>(1)</span>
+									</h5>
+									<ol>
+										<li><details>
+												<summary>
+													<span class="request-method-n-url">GET http://127.0.0.1:8000/docs</span>
+												</summary>
+												
+<table class="alerts-table">
+	<tbody><tr>
+		<th scope="row">Alert tags</th>
+		<td>
+			<ul class="alert-tags-list">
+				<li>
+					 <span>POLICY_QA_STD = </span>
+				</li>
+				<li>
+					 <span>POLICY_PENTEST = </span>
+				</li>
+				<li>
+					<span><a href="https://www.zaproxy.org/docs/desktop/addons/common-library/alerttags/#systemic">SYSTEMIC</a></span> 
+				</li>
+				<li>
+					 <span>POLICY_DEV_STD = </span>
+				</li>
+			</ul>
+		</td>
+	</tr>
+	<tr>
+		<th scope="row">Alert description</th>
+		<td> 
+<p>The application appears to be a modern web application. If you need to explore it automatically then the Client Spider may well be more effective than the standard one.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Other info</th>
+		<td> 
+<p>No links have been found while there are scripts, which is an indication that this is a modern web application.</p>
+ </td>
+	</tr>
+	<tr>
+		<th scope="row">Request</th>
+		<td><details open="open">
+				<summary>Request line and header section (233 bytes)</summary>
+				
+				<pre><code>GET http://127.0.0.1:8000/docs HTTP/1.1
+host: 127.0.0.1:8000
+user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36
+pragma: no-cache
+cache-control: no-cache
+
+</code></pre>
+				
+				
+			</details> <details class="request-body" open="open">
+				<summary>Request body (0 bytes)</summary>
+				
+				<pre><code></code></pre>
+				
+				
+			</details></td>
+	</tr>
+	<tr>
+		<th scope="row">Response</th>
+		<td><details open="open">
+				<summary>Status line and header section (581 bytes)</summary>
+				
+				<pre><code>HTTP/1.1 200 OK
+date: Sat, 26 Sep 2026 13:13:54 GMT
+server: uvicorn
+content-length: 1014
+content-type: text/html; charset=utf-8
+strict-transport-security: max-age=31536000; includeSubDomains
+x-frame-options: DENY
+x-content-type-options: nosniff
+content-security-policy: default-src 'self'; script-src 'self' https://cdn.jsdelivr.net 'sha256-QOOQu4W1oxGqd2nbXbxiA1Di6OHQOLQD+o+G9oWL8YY='; style-src 'self' https://cdn.jsdelivr.net; img-src 'self' data: https://fastapi.tiangolo.com; connect-src 'self' https://cdn.jsdelivr.net; form-action 'self'; frame-ancestors 'none'
+
+</code></pre>
+				
+				
+			</details> <details class="response-body" open="open">
+				<summary>Response body (1014 bytes)</summary>
+				
+				<pre><code>
+    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+    &lt;head&gt;
+    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+    &lt;link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui.css"&gt;
+    &lt;link rel="shortcut icon" href="https://fastapi.tiangolo.com/img/favicon.png"&gt;
+    &lt;title&gt;E-ComShield API - Swagger UI&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+    &lt;div id="swagger-ui"&gt;
+    &lt;/div&gt;
+    &lt;script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"&gt;&lt;/script&gt;
+    &lt;!-- `SwaggerUIBundle` is now available on the page --&gt;
+    &lt;script&gt;
+    const ui = SwaggerUIBundle({
+        url: '/openapi.json',
+    "dom_id": "#swagger-ui",
+"layout": "BaseLayout",
+"deepLinking": true,
+"showExtensions": true,
+"showCommonExtensions": true,
+oauth2RedirectUrl: window.location.origin + '/docs/oauth2-redirect',
+    presets: [
+        SwaggerUIBundle.presets.apis,
+        SwaggerUIBundle.SwaggerUIStandalonePreset
+        ],
+    })
+    &lt;/script&gt;
+    &lt;/body&gt;
+    &lt;/html&gt;
+    </code></pre>
+				
+				
+			</details></td>
+	</tr>
+	
+	
+	<tr>
+		<th scope="row">Evidence</th>
+		<td><pre><code>&lt;script src="https://cdn.jsdelivr.net/npm/swagger-ui-dist@5/swagger-ui-bundle.js"&gt;&lt;/script&gt;</code></pre></td>
+	</tr>
+	<tr>
+		<th scope="row">Solution</th>
+		<td> 
+<p>This is an informational alert and so no changes are required.</p>
+ </td>
+	</tr>
+</tbody></table>
+
+											</details></li>
+									</ol>
+								</li>
+								
+							</ol>
+						</li>
+						
+					</ol>
+				</li>
+				
+				
+				  
+			</ol>
+		</section>
+
+		<section id="appendix" class="appendix">
+			<h2>Appendix</h2>
+
+			<section id="alert-types" class="alert-types">
+				<h3>Alert Types</h3>
+				<p class="alert-types-intro">This section contains additional information on the types of alerts in the report.</p>
+				<ol>
+					<li id="alert-type-0">
+						<h4>Sub Resource Integrity Attribute Missing</h4>
+						<table class="alert-types-table">
+							<tbody><tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a href="https://www.zaproxy.org/docs/alerts/90003/">Sub Resource Integrity Attribute Missing</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a href="https://cwe.mitre.org/data/definitions/345.html">345</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							<tr>
+								<th scope="row">Reference</th>
+								<td>
+									<ol>
+										<li><a href="https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity">https://developer.mozilla.org/en-US/docs/Web/Security/Defenses/Subresource_Integrity</a></li>
+									</ol>
+								</td>
+							</tr>
+						</tbody></table>
+					</li>
+					<li id="alert-type-1">
+						<h4>Cross-Domain JavaScript Source File Inclusion</h4>
+						<table class="alert-types-table">
+							<tbody><tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a href="https://www.zaproxy.org/docs/alerts/10017/">Cross-Domain JavaScript Source File Inclusion</a>)
+									</span>   
+								</td>
+							</tr>
+							<tr>
+								<th scope="row">CWE ID</th>
+								<td><a href="https://cwe.mitre.org/data/definitions/829.html">829</a></td>
+							</tr>
+							<tr>
+								<th scope="row">WASC ID</th>
+								<td>15</td>
+							</tr>
+							
+						</tbody></table>
+					</li>
+					<li id="alert-type-2">
+						<h4>Modern Web Application</h4>
+						<table class="alert-types-table">
+							<tbody><tr>
+								<th scope="row">Source</th>
+								<td>
+									
+									   <span>raised by a passive scanner</span> <span>(<a href="https://www.zaproxy.org/docs/alerts/10109/">Modern Web Application</a>)
+									</span>   
+								</td>
+							</tr>
+							
+							
+							
+						</tbody></table>
+					</li>
+				</ol>
+			</section>
+		</section>
+		 
+	</main>
+
+
+
+
+
+</body></html>
