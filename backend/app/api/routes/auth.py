@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status, Request
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlmodel import Session, select
 
@@ -6,14 +6,18 @@ from app.api.deps import get_db
 from app.models.user import User
 from app.security.jwt import create_access_token
 from app.security.password import verify_password
+from app.core.rate_limit import limiter
 
 router = APIRouter(
     prefix="/auth",
     tags=["Authentication"],
 )
 
+# Limita a rota de login para 5 solicitações por minuto
 @router.post("/token")
+@limiter.limit("5/minute")
 async def login(
+    request: Request,
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db),
 ):
