@@ -146,16 +146,20 @@ e-comshield/
    ```
 8. A API sobe por padrão em `http://127.0.0.1:8000`.
 
-Rotas disponíveis:
+### Rotas disponíveis:
 - `GET /health` — verifica a disponibilidade da API e não requer autenticação.
 - `POST /auth/token` — autentica o usuário e retorna um token JWT.
 - `POST /predict` — protegida por JWT; recebe a mensagem do usuário e retorna uma resposta placeholder enquanto o Agent não está integrado.
 - `GET /orders/{order_id}` — consulta um pedido autenticado, verificando a propriedade do recurso (BOLA).
 
+### Rate Limiting
+
+O endpoint `/auth/token` possui limite de **5 requisições por minuto por endereço IP**, utilizando rate limiting para reduzir tentativas automatizadas de brute force contra a autenticação.
+
 A documentação interativa da API está disponível em:
 `http://127.0.0.1:8000/docs`
 
-Testes de segurança
+### Testes de segurança
 - Para executar os testes automatizados:
 `pytest tests/`
 - A suíte contém testes para autenticação, autorização/BOLA e validação de campos adicionais.
