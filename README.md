@@ -272,11 +272,17 @@ Interface definida entre a parte de Dados/IA (agente) e a parte de Backend/API, 
 
 ## Próximos passos
 
-1. Integrar o agente de IA ao endpoint /predict.
-2. Sincronizar o contrato agente ↔ backend com a implementação definitiva do agente.
-3. Montar o DFD com trust boundaries e análise CIA em conjunto.
-4. Implementar as ações de negócio relacionadas às intenções do agente, mantendo as validações de autenticação e autorização no backend.
-5. Expandir a cobertura dos testes automatizados conforme novos endpoints e funcionalidades forem implementados.
+1. Formular a pergunta de classificação e o plano de arquitetura da IA (TP3), com base nos achados
+   da EDA (categorias/intenções mapeadas e ausência de correlação forte entre valor do pedido,
+   tempo de resposta e satisfação).
+2. Treinar e avaliar o classificador de intenção com o dataset Bitext, e integrá-lo ao endpoint
+   `/predict`, substituindo a resposta placeholder atual.
+3. Sincronizar o contrato agente ↔ backend com a implementação definitiva do agente.
+4. Implementar as ações de negócio relacionadas às intenções do agente, mantendo as validações de
+   autenticação e autorização já existentes no backend.
+5. Expandir a cobertura dos testes automatizados conforme novos endpoints e funcionalidades forem
+   implementados.
+6. Planejar o escopo do pentest que será conduzido por outra dupla da turma ao final do bloco.
 
 ## Uso de IA
 
@@ -301,15 +307,3 @@ Todas as decisões finais — escolha do dataset, interpretação dos resultados
 hipóteses com os dados reais — foram revisadas e conferidas manualmente antes de serem
 incorporadas ao trabalho, em linha com a responsabilidade do aluno de garantir a precisão das
 informações usadas a partir de IA.
-
-## Observações do professor relevantes ao TP1
-
-- Preferir dataset real ou híbrido a puramente sintético; combinar múltiplos datasets é esperado
-  e recomendado ("Frankenstein" de datasets).
-- Manter o dataset em inglês é aceitável — tradução é etapa de fases futuras do curso.
-- Hipóteses de distribuição de intenção (Tarefa 3) não exigem justificativa estatística rigorosa
-  nesta fase do curso.
-- Dataset não deve carregar dados administrativos irrelevantes à tarefa de IA (ex.: matrícula,
-  nota, endereço) — apenas o necessário para intenção/sentimento/urgência.
-- Nesta etapa, o DFD é só mapeamento (entrada, saída, trust boundaries, CIA) — nenhuma
-  implementação de defesa de segurança é esperada ainda.
