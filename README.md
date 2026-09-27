@@ -34,26 +34,39 @@ e-comshield/
 │   ├── 02_limpeza.py     # aplica as decisões de limpeza e gera data/processed/
 │   ├── agent.py          # lógica do agente (memória e tool calling) — próxima etapa
 │   └── data/             # datasets brutos e tratados (não versionados, ver seção "Datasets")
-├── backend/                       # API/backend (Integrante B)
+├── backend/              # API/backend (Integrante B)
 │   ├── app/
 │   │   ├── __init__.py
 │   │   ├── main.py
 │   │   │
 │   │   ├── api/
 │   │   │   ├── __init__.py
+│   │   │   ├── deps.py
 │   │   │   └── routes/
 │   │   │       ├── __init__.py
 │   │   │       ├── health.py
 │   │   │       ├── auth.py
-│   │   │       └── predict.py
+│   │   │       ├── predict.py
+│   │   │       └── orders.py
 │   │   │
 │   │   ├── core/
 │   │   │   ├── __init__.py
-│   │   │   └── config.py
+│   │   │   ├── config.py
+│   │   │   └── rate_limit.py
+│   │   │
+│   │   ├── db/
+│   │   │   ├── base.py
+│   │   │   └── session.py
+│   │   │
+│   │   ├── models/
+│   │   │   ├── __init__.py
+│   │   │   ├── user.py
+│   │   │   └── order.py
 │   │   │
 │   │   ├── schemas/
 │   │   │   ├── __init__.py
-│   │   │   └── predict.py
+│   │   │   ├── predict.py
+│   │   │   └── order.py
 │   │   │
 │   │   └── security/
 │   │       ├── __init__.py
@@ -61,12 +74,23 @@ e-comshield/
 │   │       ├── password.py
 │   │       └── dependencies.py
 │   │
+│   ├── tests/
+│   │   ├── conftest.py
+│   │   └── test_security.py
+│   │
+│   ├── alembic/
 │   ├── .env.example
 │   ├── requirements.txt
 │   └── ...
 ├── docs/
+|     └── security/
+│       ├── analise-zap.md
+│       ├── testes-seguranca.md
+│       └── owasp-zap-report.html
 │   ├── escolha_dataset.md
-│   └── contrato_agente_backend.md
+│   ├── contrato_agente_backend.md
+│   ├── dfd.md
+│   └── relatorio_eda.md   # relatório de EDA estruturado (TP2, Tarefa 7)
 ├── README.md
 └── .gitignore
 ```
@@ -81,7 +105,7 @@ e-comshield/
    ```
 2. Instalar as dependências:
    ```
-   pip install pandas matplotlib seaborn jupyterlab ipykernel
+   pip install pandas matplotlib seaborn scipy jupyterlab ipykernel
    ```
 3. Baixar os datasets (ver seção "Datasets" abaixo) e colocar dentro de `agent/data/`.
 4. (Opcional, mas recomendado) Rodar o script de limpeza para gerar as versões tratadas:
@@ -111,16 +135,36 @@ e-comshield/
    python -c "import secrets; print(secrets.token_urlsafe(32))"
    ```
    Copie o valor retornado e adicione ao arquivo .env
-4. Rodar a API:
+4. Configurar o PostgreSQL:
+- Baixe e instale o PostgreSQL.
+- Abra o pgAdmin e crie um banco chamado ecomshield.
+- No arquivo backend/.env, configure:
+- DATABASE_URL=postgresql://postgres:SUA_SENHA@localhost:5432/ecomshield
+5. Aplicar as migrações:
+   alembic upgrade head
+6. Rodar a API:
    ```
    uvicorn app.main:app --reload
    ```
-5. A API sobe por padrão em `http://127.0.0.1:8000`.
+8. A API sobe por padrão em `http://127.0.0.1:8000`.
 
-Rotas disponíveis:
+### Rotas disponíveis:
 - `GET /health` — verifica a disponibilidade da API e não requer autenticação.
 - `POST /auth/token` — autentica o usuário e retorna um token JWT.
 - `POST /predict` — protegida por JWT; recebe a mensagem do usuário e retorna uma resposta placeholder enquanto o Agent não está integrado.
+- `GET /orders/{order_id}` — consulta um pedido autenticado, verificando a propriedade do recurso (BOLA).
+
+### Rate Limiting
+
+O endpoint `/auth/token` possui limite de **5 requisições por minuto por endereço IP**, utilizando rate limiting para reduzir tentativas automatizadas de brute force contra a autenticação.
+
+A documentação interativa da API está disponível em:
+`http://127.0.0.1:8000/docs`
+
+### Testes de segurança
+- Para executar os testes automatizados:
+`pytest tests/`
+- A suíte contém testes para autenticação, autorização/BOLA e validação de campos adicionais.
 
 ## Datasets
 
@@ -160,12 +204,18 @@ Documentação completa da escolha, fonte e licença de cada um está em `docs/e
   CSAT médio alto (4,35), enquanto Cancellation (3,99) e Others (3,43, amostra pequena de 99
   registros) têm os piores resultados. Sugere que o processo de devolução é bem resolvido, e que
   falta de caminho de resolução claro (cancelamento, casos fora do fluxo padrão) é o que mais
-  frustra o cliente.
+  frustra o cliente. **Validado estatisticamente no TP2** com teste de Mann-Whitney U
+  (p ≈ 1,7×10⁻¹⁰⁷) — a diferença é significativa e na direção oposta à intuição inicial (ver
+  `docs/relatorio_eda.md`).
 - **Pedidos de maior valor concentram reclamação de atraso, não de fraude:** entre os 5% de
   pedidos mais caros, a subcategoria `Delayed` salta de 8,6% (geral) para 26,5%, e `Order status
   enquiry` de 8,1% para 18,1%. `Priority delivery` quase não muda. Valor do pedido está mais
   associado à ansiedade do cliente com entrega/rastreamento do que a tratamento
   prioritário/suspeita de fraude.
+- **Correlação fraca entre valor do pedido, CSAT e tempo de resposta (TP2):** o heatmap de
+  correlação e os scatter plots não mostraram relação relevante entre essas três variáveis — a
+  satisfação do cliente provavelmente depende mais do desfecho do atendimento do que do valor
+  pago ou da velocidade da resposta. Análise completa em `docs/relatorio_eda.md`.
 
 ## Decisões de limpeza de dados
 
@@ -210,25 +260,23 @@ Interface definida entre a parte de Dados/IA (agente) e a parte de Backend/API, 
 - **Pontos em aberto:** formato de `category`+`intent` (separados vs. combinado), mapeamento de
   `acao_sugerida` por intenção, threshold de `confidence` para escalonar a humano.
 
-## Status do TP1 (entrega 26/08/2026)
+## Status do TP2
 
-- [x] Escolha e documentação dos datasets (Tarefa 1)
-- [x] EDA inicial: shape, dtypes, valores ausentes, duplicatas, distribuição de categorias (Tarefa 2)
-- [x] Visualizações e hipóteses (Tarefa 3)
-- [x] Decisões de limpeza aplicadas (`agent/02_limpeza.py`) e datasets tratados salvos em `agent/data/processed/`
-- [x] Estrutura FastAPI + JWT + 3 rotas (Tarefa 4 — Integrante B): `GET /health`, `POST /auth/token`,
-      `POST /predict` (protegida por JWT) implementadas em `backend/app/`
-- [x] DFD + tríade CIA (Tarefa 5 — conjunto)
-- [x] Publicação no Git com README completo (Tarefa 6 — em andamento)
+* [x] EDA avançada: heatmap, scatter plots e teste de hipótese (Tarefa 1 — Integrante A)
+* [x] Controles OWASP Top 10: `extra="forbid"`, SQLModel e BOLA (Tarefa 2 — Integrante B)
+* [x] Headers de segurança HTTP e CORS (Tarefa 3 — Integrante B)
+* [x] Rate limiting no `/auth/token` (Tarefa 4 — Integrante B)
+* [x] Scan e análise de segurança com OWASP ZAP (Tarefa 5 — Integrante B)
+* [x] Testes de segurança com Pytest (Tarefa 6 — Integrante B)
+* [x] Relatório de EDA estruturado (Tarefa 7 — Integrante A)
 
 ## Próximos passos
 
-1. Sincronizar o contrato agente↔backend com o mapeamento real de categorias definido na limpeza.
-2. Testar manualmente o comportamento de autenticação (`/predict` deve retornar 401 sem token e
-   200 com token válido) antes da entrega.
+1. Integrar o agente de IA ao endpoint /predict.
+2. Sincronizar o contrato agente ↔ backend com a implementação definitiva do agente.
 3. Montar o DFD com trust boundaries e análise CIA em conjunto.
-4. Fechar o README com instruções de execução também da API, assim que ela existir.
-5. Criar o repositório Git e publicar (Tarefa 6).
+4. Implementar as ações de negócio relacionadas às intenções do agente, mantendo as validações de autenticação e autorização no backend.
+5. Expandir a cobertura dos testes automatizados conforme novos endpoints e funcionalidades forem implementados.
 
 ## Uso de IA
 
@@ -245,6 +293,9 @@ ferramentas de IA (Claude, da Anthropic), sendo obrigatório citar seu uso. A IA
 - Auxiliar na formulação e verificação estatística das 3 hipóteses da Tarefa 3 (incluindo revisão
   de hipóteses que não se confirmaram nos dados, como a relação inicial suposta entre categoria de
   atrito e CSAT baixo).
+- No TP2, auxiliar na escolha do teste estatístico adequado (Mann-Whitney U, após verificação de
+  normalidade com Shapiro-Wilk), na construção do heatmap de correlação e dos scatter plots, e na
+  redação do relatório de EDA estruturado (`docs/relatorio_eda.md`).
 
 Todas as decisões finais — escolha do dataset, interpretação dos resultados, validação das
 hipóteses com os dados reais — foram revisadas e conferidas manualmente antes de serem
