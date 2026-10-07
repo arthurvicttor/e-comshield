@@ -262,13 +262,27 @@ Interface definida entre a parte de Dados/IA (agente) e a parte de Backend/API, 
 
 ## Status do TP2
 
+### Dados & IA
+
 * [x] EDA avançada: heatmap, scatter plots e teste de hipótese (Tarefa 1 — Integrante A)
+* [x] Relatório de EDA estruturado (Tarefa 7 — Integrante A)
+
+### Backend & Application Security
+
 * [x] Controles OWASP Top 10: `extra="forbid"`, SQLModel e BOLA (Tarefa 2 — Integrante B)
 * [x] Headers de segurança HTTP e CORS (Tarefa 3 — Integrante B)
 * [x] Rate limiting no `/auth/token` (Tarefa 4 — Integrante B)
 * [x] Scan e análise de segurança com OWASP ZAP (Tarefa 5 — Integrante B)
 * [x] Testes de segurança com Pytest (Tarefa 6 — Integrante B)
-* [x] Relatório de EDA estruturado (Tarefa 7 — Integrante A)
+
+As evidências práticas dos controles de segurança estão disponíveis em
+[`docs/security/evidencias/`](./docs/security/evidencias/).
+
+A documentação técnica dos testes e análises está disponível em:
+
+- [Testes de segurança](./docs/security/testes-seguranca.md)
+- [Análise OWASP ZAP](./docs/security/analise-zap.md)
+- [Relatório OWASP ZAP](./docs/security/owasp-zap-report.html)
 
 ## Próximos passos
 
