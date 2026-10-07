@@ -276,13 +276,13 @@ Interface definida entre a parte de Dados/IA (agente) e a parte de Backend/API, 
 * [x] Testes de segurança com Pytest (Tarefa 6 — Integrante B)
 
 As evidências práticas dos controles de segurança estão disponíveis em
-[`docs/security/evidencias/`](./docs/security/evidencias/).
+[`docs/security/evidencias/`](./docs/security).
 
 A documentação técnica dos testes e análises está disponível em:
 
 - [Testes de segurança](./docs/security/testes-seguranca.md)
 - [Análise OWASP ZAP](./docs/security/analise-zap.md)
-- [Relatório OWASP ZAP](./docs/security/owasp-zap-report.html)
+- [Relatório OWASP ZAP](./docs/security/owasp-zap-report.html.html)
 
 ## Próximos passos
 
