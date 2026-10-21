@@ -52,5 +52,8 @@ jobs:
       - name: Apply database migrations
         run: alembic upgrade head
 
+      - name: Seed test database
+        run: python -m app.db.seed_test
+
       - name: Run security tests
         run: pytest tests/ -v
