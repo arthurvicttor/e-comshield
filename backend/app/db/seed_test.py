@@ -45,7 +45,7 @@ def seed_test_database():
             session.commit()
             session.refresh(user2)
 
-        # Criar pedido para validar proteção BOLA
+        # Criar um pedido de teste para o usuário2
         order = session.get(Order, 1)
 
         if order is None:
