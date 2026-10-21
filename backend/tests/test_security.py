@@ -1,3 +1,4 @@
+
 from fastapi.testclient import TestClient
 
 from app.main import app
@@ -5,15 +6,10 @@ from app.main import app
 
 client = TestClient(app)
 
-# Testes de segurança
-def test_pedido_exige_autenticacao():
-    response = client.get("/orders/1")
 
-    assert response.status_code == 401
-
-# Teste para verificar se um usuário não pode acessar pedidos de outro usuário
-def test_usuario_nao_pode_acessar_pedido_de_outro_usuario():
-    login_response = client.post(
+def obter_token():
+    """Autentica o usuário de teste e retorna seu JWT."""
+    response = client.post(
         "/auth/token",
         data={
             "username": "user1",
@@ -21,9 +17,20 @@ def test_usuario_nao_pode_acessar_pedido_de_outro_usuario():
         },
     )
 
-    assert login_response.status_code == 200
+    assert response.status_code == 200
+    return response.json()["access_token"]
 
-    token = login_response.json()["access_token"]
+
+# Autenticação obrigatória
+def test_pedido_exige_autenticacao():
+    response = client.get("/orders/1")
+
+    assert response.status_code == 401
+
+
+# Proteção contra BOLA/IDOR
+def test_usuario_nao_pode_acessar_pedido_de_outro_usuario():
+    token = obter_token()
 
     response = client.get(
         "/orders/1",
@@ -34,19 +41,10 @@ def test_usuario_nao_pode_acessar_pedido_de_outro_usuario():
 
     assert response.status_code == 403
 
-# Teste para verificar se a rota de previsão rejeita campos extras
+
+# Validação de campos extras
 def test_predict_rejeita_campo_extra():
-    login_response = client.post(
-        "/auth/token",
-        data={
-            "username": "user1",
-            "password": "user123",
-        },
-    )
-
-    assert login_response.status_code == 200
-
-    token = login_response.json()["access_token"]
+    token = obter_token()
 
     response = client.post(
         "/predict",
@@ -60,3 +58,34 @@ def test_predict_rejeita_campo_extra():
     )
 
     assert response.status_code == 422
+
+
+# Rejeição de credenciais inválidas
+def test_login_rejeita_senha_incorreta():
+    response = client.post(
+        "/auth/token",
+        data={
+            "username": "user1",
+            "password": "senha_incorreta",
+        },
+    )
+
+    assert response.status_code == 401
+
+
+# Rate limiting no endpoint de autenticação
+def test_login_aplica_rate_limiting():
+    responses = []
+
+    for _ in range(7):
+        response = client.post(
+            "/auth/token",
+            data={
+                "username": "user1",
+                "password": "senha_incorreta",
+            },
+        )
+
+        responses.append(response.status_code)
+
+    assert 429 in responses
