@@ -32,6 +32,7 @@ e-comshield/
 ├── agent/               # Parte de Dados & IA (Integrante A)
 │   ├── 01_eda.ipynb
 │   ├── 02_limpeza.py     # aplica as decisões de limpeza e gera data/processed/
+│   ├── 03_regressao_linear.ipynb   # regressão linear múltipla + resíduos (TP3)
 │   ├── agent.py          # lógica do agente (memória e tool calling) — próxima etapa
 │   └── data/             # datasets brutos e tratados (não versionados, ver seção "Datasets")
 ├── backend/              # API/backend (Integrante B)
@@ -90,7 +91,9 @@ e-comshield/
 │   ├── escolha_dataset.md
 │   ├── contrato_agente_backend.md
 │   ├── dfd.md
-│   └── relatorio_eda.md   # relatório de EDA estruturado (TP2, Tarefa 7)
+│   ├── relatorio_eda.md   # relatório de EDA estruturado (TP2, Tarefa 7)
+│   ├── pergunta_classificacao.md   # pergunta de classificação (TP3)
+│   └── planejamento_t2.md          # plano do Trimestre 2 (TP3)
 ├── README.md
 └── .gitignore
 ```
@@ -270,6 +273,12 @@ Interface definida entre a parte de Dados/IA (agente) e a parte de Backend/API, 
 * [x] Testes de segurança com Pytest (Tarefa 6 — Integrante B)
 * [x] Relatório de EDA estruturado (Tarefa 7 — Integrante A)
 
+## Status do TP3 (parte de Dados/IA)
+
+* [x] Regressão linear múltipla com R², RMSE, residual plot e Q-Q plot (`agent/03_regressao_linear.ipynb`)
+* [x] Pergunta de classificação (`docs/pergunta_classificacao.md`)
+* [~] Planejamento T2 (`docs/planejamento_t2.md`): falta preencher colega adversário e URL da API alvo
+
 ## Próximos passos
 
 1. Integrar o agente de IA ao endpoint /predict.
@@ -293,6 +302,8 @@ ferramentas de IA (Claude, da Anthropic), sendo obrigatório citar seu uso. A IA
 - Auxiliar na formulação e verificação estatística das 3 hipóteses da Tarefa 3 (incluindo revisão
   de hipóteses que não se confirmaram nos dados, como a relação inicial suposta entre categoria de
   atrito e CSAT baixo).
+- No TP3, auxiliar no notebook de regressão linear e na redação dos documentos de classificação e de
+  planejamento do T2.
 - No TP2, auxiliar na escolha do teste estatístico adequado (Mann-Whitney U, após verificação de
   normalidade com Shapiro-Wilk), na construção do heatmap de correlação e dos scatter plots, e na
   redação do relatório de EDA estruturado (`docs/relatorio_eda.md`).
