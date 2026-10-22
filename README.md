@@ -23,7 +23,7 @@ rastreamento de pedidos, trocas, devoluções, reembolsos e reclamações de pro
 | Integrante | Papel | Responsabilidades |
 |---|---|---|
 | Integrante A (Sandy) | Engenheiro de Dados & IA | EDA, tratamento do dataset, treinamento do classificador de intenção, lógica do agente (memória e tool calling) |
-| Integrante B | Engenheiro de Software & Application Security | API FastAPI, controles OWASP Top 10, JWT, rate limiting, OWASP ZAP, relatório de pentest |
+| Integrante B (Arthur) | Engenheiro de Software & Application Security | API FastAPI, controles OWASP Top 10, JWT, rate limiting, OWASP ZAP, relatório de pentest |
 
 ## Estrutura do repositório
 
@@ -34,63 +34,73 @@ e-comshield/
 │   ├── 02_limpeza.py     # aplica as decisões de limpeza e gera data/processed/
 │   ├── agent.py          # lógica do agente (memória e tool calling) — próxima etapa
 │   └── data/             # datasets brutos e tratados (não versionados, ver seção "Datasets")
-├── backend/              # API/backend (Integrante B)
+├── backend/             # API/backend (Integrante B)
 │   ├── app/
-│   │   ├── __init__.py
 │   │   ├── main.py
-│   │   │
 │   │   ├── api/
-│   │   │   ├── __init__.py
 │   │   │   ├── deps.py
 │   │   │   └── routes/
-│   │   │       ├── __init__.py
 │   │   │       ├── health.py
 │   │   │       ├── auth.py
 │   │   │       ├── predict.py
 │   │   │       └── orders.py
 │   │   │
 │   │   ├── core/
-│   │   │   ├── __init__.py
 │   │   │   ├── config.py
 │   │   │   └── rate_limit.py
 │   │   │
 │   │   ├── db/
 │   │   │   ├── base.py
-│   │   │   └── session.py
+│   │   │   ├── session.py
+│   │   │   └── seed_test.py
 │   │   │
 │   │   ├── models/
-│   │   │   ├── __init__.py
 │   │   │   ├── user.py
 │   │   │   └── order.py
 │   │   │
 │   │   ├── schemas/
-│   │   │   ├── __init__.py
+│   │   │   ├── auth.py
+│   │   │   ├── health.py
 │   │   │   ├── predict.py
 │   │   │   └── order.py
 │   │   │
-│   │   └── security/
-│   │       ├── __init__.py
-│   │       ├── jwt.py
-│   │       ├── password.py
-│   │       └── dependencies.py
+│   │   ├── security/
+│   │   │   ├── jwt.py
+│   │   │   ├── password.py
+│   │   │   └── dependencies.py
+│   │   │
+│   │   └── static/
+│   │       └── swagger/
+│   │           ├── swagger-ui.css
+│   │           ├── swagger-ui-bundle.js
+│   │           └── swagger-init.js
 │   │
 │   ├── tests/
 │   │   ├── conftest.py
 │   │   └── test_security.py
 │   │
 │   ├── alembic/
+│   ├── alembic.ini
 │   ├── .env.example
-│   ├── requirements.txt
-│   └── ...
+│   └── requirements.txt
+│
 ├── docs/
-|     └── security/
-│       ├── analise-zap.md
-│       ├── testes-seguranca.md
-│       └── owasp-zap-report.html
+│   ├── security/
+│   │   ├── analise-zap.md
+│   │   ├── auditoria-final.md
+│   │   ├── testes-seguranca.md
+│   │   ├── owasp-zap-report.html.html
+│   │   ├── owasp-zap-report-tp3.html
+│   │   ├── openapi-tp3.json
+│   │   └── Figura 1 a Figura 9 (evidências PNG)
+│   │
 │   ├── escolha_dataset.md
 │   ├── contrato_agente_backend.md
 │   ├── dfd.md
-│   └── relatorio_eda.md   # relatório de EDA estruturado (TP2, Tarefa 7)
+│   ├── relatorio_eda.md
+│   ├── pergunta-classificacao.md
+│   └── planejamento-t2.md
+│
 ├── README.md
 └── .gitignore
 ```
@@ -260,43 +270,90 @@ Interface definida entre a parte de Dados/IA (agente) e a parte de Backend/API, 
 - **Pontos em aberto:** formato de `category`+`intent` (separados vs. combinado), mapeamento de
   `acao_sugerida` por intenção, threshold de `confidence` para escalonar a humano.
 
-## Status do TP2
 
-### Dados & IA
+## Status do TP3
 
-* [x] EDA avançada: heatmap, scatter plots e teste de hipótese (Tarefa 1 — Integrante A)
-* [x] Relatório de EDA estruturado (Tarefa 7 — Integrante A)
+O TP3 consolida as implementações do primeiro trimestre
+e prepara a transição para a fase de classificação
+supervisionada e avaliação adversária de segurança.
 
-### Backend & Application Security
+### Dados & Inteligência Artificial — Integrante A
 
-* [x] Controles OWASP Top 10: `extra="forbid"`, SQLModel e BOLA (Tarefa 2 — Integrante B)
-* [x] Headers de segurança HTTP e CORS (Tarefa 3 — Integrante B)
-* [x] Rate limiting no `/auth/token` (Tarefa 4 — Integrante B)
-* [x] Scan e análise de segurança com OWASP ZAP (Tarefa 5 — Integrante B)
-* [x] Testes de segurança com Pytest (Tarefa 6 — Integrante B)
+- [ ] **Critério 1 — Regressão linear e múltipla:**
+  pipeline de pré-processamento, treinamento e avaliação.
+  Evidência: notebook de regressão (a vincular).
 
-As evidências práticas dos controles de segurança estão disponíveis em
-[`docs/security/evidencias/`](./docs/security).
+- [ ] **Critério 2 — Avaliação da regressão:**
+  métricas R² e RMSE, residual plot e Q-Q plot.
+  Evidência: notebook de regressão (a vincular).
 
-A documentação técnica dos testes e análises está disponível em:
+- [ ] **Critério 3 — Limitações da regressão:**
+  análise técnica das limitações para classificação
+  de intenções.
+  Evidência: notebook de regressão (a vincular).
 
-- [Testes de segurança](./docs/security/testes-seguranca.md)
-- [Análise OWASP ZAP](./docs/security/analise-zap.md)
-- [Relatório OWASP ZAP](./docs/security/owasp-zap-report.html.html)
+- [ ] **Critério 7 — Pergunta de classificação:**
+  definição das classes e distribuição no dataset.
+  Evidência: documento a vincular.
 
-## Próximos passos
+- [ ] **Critério 8 — ML supervisionado:**
+  justificativa técnica da abordagem preditiva.
+  Evidência: documento a vincular.
 
-1. Formular a pergunta de classificação e o plano de arquitetura da IA (TP3), com base nos achados
-   da EDA (categorias/intenções mapeadas e ausência de correlação forte entre valor do pedido,
-   tempo de resposta e satisfação).
-2. Treinar e avaliar o classificador de intenção com o dataset Bitext, e integrá-lo ao endpoint
-   `/predict`, substituindo a resposta placeholder atual.
-3. Sincronizar o contrato agente ↔ backend com a implementação definitiva do agente.
-4. Implementar as ações de negócio relacionadas às intenções do agente, mantendo as validações de
-   autenticação e autorização já existentes no backend.
-5. Expandir a cobertura dos testes automatizados conforme novos endpoints e funcionalidades forem
-   implementados.
-6. Planejar o escopo do pentest que será conduzido por outra dupla da turma ao final do bloco.
+### Backend & Application Security — Integrante B
+
+- [x] **Critério 4 — Testes de segurança:**
+  implementação de cinco testes Pytest cobrindo
+  autenticação, BOLA/IDOR, validação de entradas
+  e rate limiting.
+  [Código dos testes](./backend/tests/test_security.py) |
+  [Documentação](./docs/security/testes-seguranca.md)
+
+- [x] **Critério 5 — GitHub Actions:**
+  pipeline automatizado com PostgreSQL, migrations,
+  seed de testes e execução do Pytest.
+  [Workflow CI/CD](./.github/workflows/security-tests.yml) |
+  [Seed de testes](./backend/app/db/seed_test.py)
+
+- [x] **Critério 6 — Execução do Pytest:**
+  cinco testes automatizados aprovados.
+  [Código dos testes](./backend/tests/test_security.py) |
+  [Auditoria final](./docs/security/auditoria-final.md)
+
+- [x] **Critério 11 — Auditoria OWASP ZAP:**
+  tratamento dos findings Medium/High identificados
+  e realização de novo scan de segurança.
+  [Análise dos findings](./docs/security/analise-zap.md) |
+  [Auditoria final](./docs/security/auditoria-final.md) |
+  [Relatório ZAP TP3](./docs/security/owasp-zap-report-tp3.html)
+
+- [x] **Critério 12 — Documentação OpenAPI:**
+  documentação dos endpoints, parâmetros, autenticação
+  e schemas de entrada e saída.
+  [Configuração FastAPI](./backend/app/main.py) |
+  [Rotas da API](./backend/app/api/routes/) |
+  [Schemas](./backend/app/schemas/) |
+  [Auditoria final](./docs/security/auditoria-final.md)
+
+### Planejamento do Trimestre 2 — Ambos os integrantes
+
+- [x] **Critério 9 — Planejamento do classificador:**
+  definição do modelo candidato, estratégia de
+  feature engineering e justificativa técnica.
+  Evidência: planejamento T2.
+
+- [ ] **Critério 10 — Avaliação adversária:**
+  identificação da dupla adversária e registro
+  da URL/IP da API alvo.
+  Situação: aguardando definição/orientação do professor.
+
+### Documentação complementar
+
+- [Relatório de EDA](./docs/relatorio_eda.md)
+- [Contrato entre agente e backend](./docs/contrato_agente_backend.md)
+- [Diagrama de fluxo de dados](./docs/dfd.md)
+- [Análise OWASP ZAP — TP2 e TP3](./docs/security/analise-zap.md)
+- [Auditoria final de segurança — TP3](./docs/security/auditoria-final.md)
 
 ## Uso de IA
 
