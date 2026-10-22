@@ -9,3 +9,15 @@ class PredictRequest(BaseModel):
         max_length=1000,
         description="Mensagem enviada pelo usuário",
     )
+
+
+class PredictResponse(BaseModel):
+    message: str
+    user: str
+    prediction: str = Field(
+        description=(
+            "Resultado provisório até a integração "
+            "do classificador de intenções"
+        ),
+        examples=["placeholder"],
+    )
