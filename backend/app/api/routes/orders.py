@@ -14,7 +14,23 @@ router = APIRouter(
 )
 
 
-@router.get("/{order_id}", response_model=OrderResponse)
+
+@router.get(
+    "/{order_id}",
+    response_model=OrderResponse,
+    summary="Consultar pedido por ID",
+    description=(
+        "Consulta um pedido pelo identificador. "
+        "O usuário precisa estar autenticado e "
+        "ser proprietário do recurso, evitando BOLA/IDOR."
+    ),
+    responses={
+        401: {"description": "Usuário não autenticado"},
+        403: {"description": "Pedido pertence a outro usuário"},
+        404: {"description": "Pedido não encontrado"},
+        422: {"description": "Identificador inválido"},
+    },
+)
 async def get_order(
     order_id: int,
     current_user: str = Depends(get_current_user),
