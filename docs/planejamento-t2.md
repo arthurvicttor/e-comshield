@@ -1,7 +1,7 @@
 # Planejamento T2 — Classificador de intenção e pentest
 
-Este documento planeja o Trimestre 2: treinar o classificador de intenção (Integrante A) e atacar a API de outra
-equipe (pentest, TP4/TP5). Detalhes da pergunta de classificação e das classes estão em
+Este documento planeja o Trimestre 2: treinar o classificador de intenção (Integrante A) e preparar a avaliação
+adversária de outra equipe (pentest), que foi adiada pelo professor para o TP4. Detalhes da pergunta de classificação e das classes estão em
 `docs/pergunta-classificacao.md`.
 
 ## 1. Pergunta de classificação e classes
@@ -105,36 +105,26 @@ Pontos técnicos a planejar:
 - **Segurança do artefato:** o arquivo do modelo (joblib/pickle) só é carregado de um caminho confiável do próprio
   projeto, porque desserializar um arquivo malicioso executa código.
 
-## 6. Colega adversário
+## 6. Avaliação adversária (pentest) — adiada para o TP4
 
-> **A PREENCHER por Sandy/Arthur:** nome da equipe adversária e GitHub.
+Por orientação do professor, o ataque à API de outra dupla **não faz parte do TP3** e foi adiado para o TP4.
+Por isso, neste momento, não há colega adversário nem URL/IP da API alvo registrados: essas informações serão
+definidas e documentadas no início do TP4.
 
-| Campo | Valor |
-|---|---|
-| Equipe/colega adversário | _(nome e GitHub)_ |
-| Quem na minha dupla ataca | _(Sandy / Arthur / ambos)_ |
-| Quem ataca a nossa API | _(equipe que nos foi atribuída)_ |
+**O que será registrado no TP4, antes de qualquer teste:**
+- Equipe/colega adversário (e quem ataca a nossa API).
+- URL ou IP da API alvo, com `/docs` e `/openapi.json` acessíveis.
+- Duas contas de teste sintéticas, cada uma com um recurso, para verificar BOLA.
+- Endpoints liberados, período combinado e o que é proibido (negação de serviço, operações destrutivas,
+  credenciais ou dados pessoais reais).
 
-## 7. URL ou IP da API adversária (alvo do TP4/TP5)
-
-> **A PREENCHER:** URL/IP e porta da API do colega, a confirmar com ele.
-
-| Campo | Valor |
-|---|---|
-| URL/IP base | _(ex.: http://IP:8000)_ |
-| Documentação OpenAPI | _(base)/docs e _(base)/openapi.json_ |
-| Contas de teste fornecidas | _(duas contas sintéticas, cada uma com um recurso, para testar BOLA)_ |
-| Endpoints liberados | _(a combinar)_ |
-| Fora do escopo | negação de serviço, operações destrutivas, credenciais ou dados pessoais reais |
-| Período combinado | _(datas/horários)_ |
-
-Plano de ataque inicial (a refinar quando eu ler a documentação deles):
-1. Autenticação: enumeração de usuários (mensagens de erro diferentes), JWT forjado/`alg=none`/expirado.
+**Plano de ataque inicial** (a refinar quando a documentação da API alvo estiver disponível):
+1. Autenticação: enumeração de usuários, JWT forjado, `alg=none` ou expirado.
 2. Autorização: BOLA/IDOR trocando IDs de recursos entre as duas contas de teste.
 3. Validação: campos extras, tipos errados, strings enormes, injeção.
-4. Rate limiting: checar se existe e se dá para contornar (ex.: `X-Forwarded-For`), sem fazer DoS.
-5. Cabeçalhos/CORS/CSP com scan passivo do OWASP ZAP (lembrando que CORS não é autenticação).
-6. Se o endpoint de classificação estiver ativo: exemplos adversariais contra o modelo (evasão por typos/sinônimos).
+4. Rate limiting: verificar se existe, sem fazer DoS.
+5. Cabeçalhos, CORS e CSP com scan passivo do OWASP ZAP (CORS não substitui autenticação).
+6. Se o endpoint de classificação estiver ativo: exemplos adversariais contra o modelo.
 
 ## Cronograma sugerido
 
@@ -142,10 +132,9 @@ Plano de ataque inicial (a refinar quando eu ler a documentação deles):
 |---|---|
 | T2 início | Baseline TF-IDF + logística em notebook, com split estratificado |
 | T2 meio | LinearSVC, ablação de features, validação contra Shopzilla, integração em `/predict` |
-| TP4/TP5 | Pentest da API adversária e relatório de achados |
+| TP4 | Pentest da API adversária e relatório de achados (adiado pelo professor; não faz parte do TP3) |
 
 ## Uso de IA
 
 Planejamento redigido com apoio de IA (Claude). As escolhas de modelo, features e arquitetura são propostas que ainda
-preciso validar experimentalmente em T2; os campos das seções 6 e 7 dependem de informação que só eu e meu colega
-temos.
+preciso validar experimentalmente em T2.

@@ -343,10 +343,11 @@ supervisionada e avaliação adversária de segurança.
   feature engineering e justificativa técnica.
   Evidência: planejamento T2.
 
-- [ ] **Critério 10 — Avaliação adversária:**
+- [x] **Critério 10 — Avaliação adversária:**
   identificação da dupla adversária e registro
   da URL/IP da API alvo.
-  Situação: aguardando definição/orientação do professor.
+  Situação: adiado para o TP4 por orientação do professor; não é exigido no TP3.
+  [Planejamento T2, seção 6](./docs/planejamento-t2.md)
 
 ### Documentação complementar
 
