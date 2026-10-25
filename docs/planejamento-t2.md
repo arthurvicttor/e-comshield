@@ -2,7 +2,7 @@
 
 Este documento planeja o Trimestre 2: treinar o classificador de intenção (Integrante A) e atacar a API de outra
 equipe (pentest, TP4/TP5). Detalhes da pergunta de classificação e das classes estão em
-`docs/pergunta_classificacao.md`.
+`docs/pergunta-classificacao.md`.
 
 ## 1. Pergunta de classificação e classes
 
@@ -14,7 +14,7 @@ equipe (pentest, TP4/TP5). Detalhes da pergunta de classificação e das classes
   `availability*`, `request_refund` / `refund_status` / `refund_policy`, `track_order` / `track_delivery` e o grupo
   `delivery_issue` / `damaged_delivery` / `missing_item` / `wrong_item`.
 - Regressão linear não serve (alvo categórico nominal, saída contínua, sem probabilidade): ver
-  `agent/03_regressao_linear.ipynb` e a seção 5 de `docs/pergunta_classificacao.md`.
+  `agent/03_regressao_linear.ipynb` e a seção 5 de `docs/pergunta-classificacao.md`.
 
 ## 2. Modelo candidato
 

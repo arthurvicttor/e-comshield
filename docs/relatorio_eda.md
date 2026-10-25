@@ -91,7 +91,7 @@ isso usei o Mann-Whitney U, que não exige essa premissa.
 ## Conexão com a pergunta de classificação (TP3)
 
 A pergunta que o TP3 formaliza é: **dado o texto de um atendimento, qual é a intenção do usuário?**
-(`docs/pergunta_classificacao.md`). Os achados da EDA se ligam a ela assim:
+(`docs/pergunta-classificacao.md`). Os achados da EDA se ligam a ela assim:
 
 | Observação | Insight | Hipótese | Teste futuro (T2) |
 |---|---|---|---|
@@ -105,7 +105,7 @@ número não é identificar uma categoria (ver `agent/03_regressao_linear.ipynb`
 
 ## Próximos passos
 
-- Treinar o classificador de intenção (TF-IDF + regressão logística/SVM, ver `docs/planejamento_t2.md`) com o Bitext e integrá-lo ao endpoint `/predict` do backend.
+- Treinar o classificador de intenção (TF-IDF + regressão logística/SVM, ver `docs/planejamento-t2.md`) com o Bitext e integrá-lo ao endpoint `/predict` do backend.
 - Validar, com uma amostra de mensagens reais (se disponível), se a taxonomia de intenções definida no
   contrato agente↔backend cobre bem os casos reais de atendimento.
 - Investigar outras variáveis que possam explicar a satisfação do cliente além das disponíveis nesse

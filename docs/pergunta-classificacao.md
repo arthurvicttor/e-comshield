@@ -105,7 +105,7 @@ A diferença entre categorias vem só de quantas intenções cada uma contém (~
 **Atenção — balanceamento artificial.** No dataset real (Shopzilla) a distribuição é muito concentrada: `Returns`
 tem 44.097 dos 85.907 registros (~51%) e `Others`, `App/website` e `Onboarding related` têm menos de 100 cada. O
 Bitext é sintético, gerado por templates; um modelo treinado só nele pode ir muito bem no teste e pior com mensagens
-reais. Por isso o plano de T2 prevê checar o modelo contra o Shopzilla (ver `docs/planejamento_t2.md`).
+reais. Por isso o plano de T2 prevê checar o modelo contra o Shopzilla (ver `docs/planejamento-t2.md`).
 
 ## 4. Ambiguidades entre classes
 

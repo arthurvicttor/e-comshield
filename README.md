@@ -92,8 +92,8 @@ e-comshield/
 │   ├── contrato_agente_backend.md
 │   ├── dfd.md
 │   ├── relatorio_eda.md   # relatório de EDA estruturado (TP2, Tarefa 7)
-│   ├── pergunta_classificacao.md   # pergunta de classificação (TP3)
-│   └── planejamento_t2.md          # plano do Trimestre 2 (TP3)
+│   ├── pergunta-classificacao.md   # pergunta de classificação (TP3)
+│   └── planejamento-t2.md          # plano do Trimestre 2 (TP3)
 ├── README.md
 └── .gitignore
 ```
@@ -276,8 +276,8 @@ Interface definida entre a parte de Dados/IA (agente) e a parte de Backend/API, 
 ## Status do TP3 (parte de Dados/IA)
 
 * [x] Regressão linear múltipla com R², RMSE, residual plot e Q-Q plot (`agent/03_regressao_linear.ipynb`)
-* [x] Pergunta de classificação (`docs/pergunta_classificacao.md`)
-* [~] Planejamento T2 (`docs/planejamento_t2.md`): falta preencher colega adversário e URL da API alvo
+* [x] Pergunta de classificação (`docs/pergunta-classificacao.md`)
+* [~] Planejamento T2 (`docs/planejamento-t2.md`): falta preencher colega adversário e URL da API alvo
 
 ## Próximos passos
 
