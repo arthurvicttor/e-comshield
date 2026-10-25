@@ -88,9 +88,24 @@ isso usei o Mann-Whitney U, que não exige essa premissa.
   partir do Bitext (documentadas em `docs/contrato_agente_backend.md`) ainda não foram validadas contra
   dados reais de mensagens de clientes — só contra os metadados de categoria/subcategoria do Shopzilla.
 
+## Conexão com a pergunta de classificação (TP3)
+
+A pergunta que o TP3 formaliza é: **dado o texto de um atendimento, qual é a intenção do usuário?**
+(`docs/pergunta-classificacao.md`). Os achados da EDA se ligam a ela assim:
+
+| Observação | Insight | Hipótese | Teste futuro (T2) |
+|---|---|---|---|
+| No Bitext, as 46 intenções têm entre 721 e 1.000 exemplos (balanceado). No Shopzilla, `Returns` tem 44.097 dos 85.907 registros (~51%). | Dados reais são muito concentrados em poucos tipos de chamado; o dataset de treino não reproduz isso. | Um modelo treinado no Bitext vai ir bem no teste sintético e pior nas mensagens reais, principalmente nas classes raras. | Medir F1 macro no Bitext e depois nas mensagens do Shopzilla mapeadas para as intenções. |
+| No Shopzilla, `Returns` tem CSAT maior (4,35) que as demais categorias (4,13), com p ≈ 1,7×10⁻¹⁰⁷. | A categoria de maior volume não é a mais problemática; volume e insatisfação não andam juntos. | Para escalar atendimentos, a intenção sozinha não basta; é preciso também a confiança do modelo e o desfecho. | Usar o limiar de confiança do classificador para decidir o escalonamento, e não só a classe prevista. |
+| Valor do pedido, CSAT e tempo de resposta quase não se correlacionam. | Essas variáveis numéricas não ajudam a identificar a intenção. | A intenção está no texto, não nos metadados. | Usar só o texto (TF-IDF) como entrada do classificador. |
+| No Bitext há pares de intenções muito próximas (ex.: `return_product_online` / `return_product_in_store`). | A distinção está em poucas palavras. | N-gramas de palavras e de caracteres separam melhor esses pares do que palavras isoladas. | Comparar unigramas, bigramas e n-gramas de caracteres na matriz de confusão. |
+
+Também por isso o TP3 testa uma regressão linear: ela serve para praticar R², RMSE e resíduos, mas prever um
+número não é identificar uma categoria (ver `agent/03_regressao_linear.ipynb`).
+
 ## Próximos passos
 
-- Integrar o classificador de intenção (treinado com o Bitext) ao endpoint `/predict` do backend.
+- Treinar o classificador de intenção (TF-IDF + regressão logística/SVM, ver `docs/planejamento-t2.md`) com o Bitext e integrá-lo ao endpoint `/predict` do backend.
 - Validar, com uma amostra de mensagens reais (se disponível), se a taxonomia de intenções definida no
   contrato agente↔backend cobre bem os casos reais de atendimento.
 - Investigar outras variáveis que possam explicar a satisfação do cliente além das disponíveis nesse

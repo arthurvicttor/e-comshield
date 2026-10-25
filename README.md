@@ -32,6 +32,7 @@ e-comshield/
 ├── agent/               # Parte de Dados & IA (Integrante A)
 │   ├── 01_eda.ipynb
 │   ├── 02_limpeza.py     # aplica as decisões de limpeza e gera data/processed/
+│   ├── 03_regressao_linear.ipynb   # regressão linear múltipla + resíduos (TP3)
 │   ├── agent.py          # lógica do agente (memória e tool calling) — próxima etapa
 │   └── data/             # datasets brutos e tratados (não versionados, ver seção "Datasets")
 ├── backend/             # API/backend (Integrante B)
@@ -97,10 +98,9 @@ e-comshield/
 │   ├── escolha_dataset.md
 │   ├── contrato_agente_backend.md
 │   ├── dfd.md
-│   ├── relatorio_eda.md
-│   ├── pergunta-classificacao.md
-│   └── planejamento-t2.md
-│
+│   ├── relatorio_eda.md   # relatório de EDA estruturado (TP2, Tarefa 7)
+│   ├── pergunta-classificacao.md   # pergunta de classificação (TP3)
+│   └── planejamento-t2.md          # plano do Trimestre 2 (TP3)
 ├── README.md
 └── .gitignore
 ```
@@ -279,26 +279,27 @@ supervisionada e avaliação adversária de segurança.
 
 ### Dados & Inteligência Artificial — Integrante A
 
-- [ ] **Critério 1 — Regressão linear e múltipla:**
+- [x] **Critério 1 — Regressão linear e múltipla:**
   pipeline de pré-processamento, treinamento e avaliação.
-  Evidência: notebook de regressão (a vincular).
+  [Notebook de regressão](./agent/03_regressao_linear.ipynb)
 
-- [ ] **Critério 2 — Avaliação da regressão:**
+- [x] **Critério 2 — Avaliação da regressão:**
   métricas R² e RMSE, residual plot e Q-Q plot.
-  Evidência: notebook de regressão (a vincular).
+  [Notebook de regressão](./agent/03_regressao_linear.ipynb)
 
-- [ ] **Critério 3 — Limitações da regressão:**
+- [x] **Critério 3 — Limitações da regressão:**
   análise técnica das limitações para classificação
   de intenções.
-  Evidência: notebook de regressão (a vincular).
+  [Notebook de regressão](./agent/03_regressao_linear.ipynb)
 
-- [ ] **Critério 7 — Pergunta de classificação:**
+- [x] **Critério 7 — Pergunta de classificação:**
   definição das classes e distribuição no dataset.
-  Evidência: documento a vincular.
+  [Pergunta de classificação](./docs/pergunta-classificacao.md)
 
-- [ ] **Critério 8 — ML supervisionado:**
+- [x] **Critério 8 — ML supervisionado:**
   justificativa técnica da abordagem preditiva.
-  Evidência: documento a vincular.
+  [Pergunta de classificação](./docs/pergunta-classificacao.md) |
+  [Planejamento T2](./docs/planejamento-t2.md)
 
 ### Backend & Application Security — Integrante B
 
@@ -370,6 +371,8 @@ ferramentas de IA (Claude, da Anthropic), sendo obrigatório citar seu uso. A IA
 - Auxiliar na formulação e verificação estatística das 3 hipóteses da Tarefa 3 (incluindo revisão
   de hipóteses que não se confirmaram nos dados, como a relação inicial suposta entre categoria de
   atrito e CSAT baixo).
+- No TP3, auxiliar no notebook de regressão linear e na redação dos documentos de classificação e de
+  planejamento do T2.
 - No TP2, auxiliar na escolha do teste estatístico adequado (Mann-Whitney U, após verificação de
   normalidade com Shapiro-Wilk), na construção do heatmap de correlação e dos scatter plots, e na
   redação do relatório de EDA estruturado (`docs/relatorio_eda.md`).
