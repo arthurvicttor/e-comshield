@@ -105,26 +105,41 @@ Pontos técnicos a planejar:
 - **Segurança do artefato:** o arquivo do modelo (joblib/pickle) só é carregado de um caminho confiável do próprio
   projeto, porque desserializar um arquivo malicioso executa código.
 
-## 6. Avaliação adversária (pentest) — adiada para o TP4
+## 6. Avaliação adversária (pentest) — TP4
 
-Por orientação do professor, o ataque à API de outra dupla **não faz parte do TP3** e foi adiado para o TP4.
-Por isso, neste momento, não há colega adversário nem URL/IP da API alvo registrados: essas informações serão
-definidas e documentadas no início do TP4.
+Conforme orientação do professor, a execução dos testes adversariais contra a API de outra equipe foi transferida para o TP4.
 
-**O que será registrado no TP4, antes de qualquer teste:**
-- Equipe/colega adversário (e quem ataca a nossa API).
-- URL ou IP da API alvo, com `/docs` e `/openapi.json` acessíveis.
-- Duas contas de teste sintéticas, cada uma com um recurso, para verificar BOLA.
-- Endpoints liberados, período combinado e o que é proibido (negação de serviço, operações destrutivas,
-  credenciais ou dados pessoais reais).
+Após essa definição, a equipe adversária foi identificada para a realização da avaliação de segurança.
 
-**Plano de ataque inicial** (a refinar quando a documentação da API alvo estiver disponível):
-1. Autenticação: enumeração de usuários, JWT forjado, `alg=none` ou expirado.
-2. Autorização: BOLA/IDOR trocando IDs de recursos entre as duas contas de teste.
-3. Validação: campos extras, tipos errados, strings enormes, injeção.
-4. Rate limiting: verificar se existe, sem fazer DoS.
-5. Cabeçalhos, CORS e CSP com scan passivo do OWASP ZAP (CORS não substitui autenticação).
-6. Se o endpoint de classificação estiver ativo: exemplos adversariais contra o modelo.
+### 6.1. Identificação da equipe adversária
+
+| Informação | Identificação |
+|---|---|
+| Equipe adversária | [Nome da equipe ou integrantes] |
+| Projeto adversário | [Nome do projeto] |
+| Repositório GitHub | [Link do repositório] |
+| URL/IP da API alvo | [Endereço da API] |
+| Documentação OpenAPI | [URL da documentação, caso disponível] |
+| Etapa de execução | TP4 |
+
+### 6.2. Escopo da avaliação
+
+A avaliação adversária será realizada exclusivamente no ambiente autorizado para as atividades acadêmicas.
+
+Antes da execução dos testes, serão confirmados os endpoints disponíveis, as credenciais fictícias, os recursos de teste e as restrições estabelecidas pela equipe responsável.
+
+### 6.3. Plano de testes
+
+A avaliação deverá contemplar:
+
+1. **Autenticação:** verificação de credenciais inválidas, tokens JWT expirados ou manipulados.
+2. **Autorização:** identificação de possíveis falhas BOLA/IDOR por meio de recursos pertencentes a diferentes usuários de teste.
+3. **Validação de entradas:** envio de campos extras, tipos incorretos e entradas malformadas.
+4. **Rate limiting:** verificação dos limites de requisições de maneira controlada.
+5. **Configurações HTTP:** análise de headers de segurança, CORS e Content Security Policy utilizando OWASP ZAP.
+6. **Segurança do modelo:** avaliação de entradas adversariais, caso exista um endpoint de classificação disponível.
+
+Os resultados serão documentados durante o TP4, incluindo os procedimentos executados, evidências, severidade dos findings e recomendações de correção.
 
 ## Cronograma sugerido
 
