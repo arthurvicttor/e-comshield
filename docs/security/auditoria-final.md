@@ -80,11 +80,22 @@ Após os ajustes de preparação do banco, a execução automatizada foi validad
 
 O workflow encerra com falha quando algum teste não passa. O bloqueio de merges depende da configuração adicional de regras de proteção da branch principal.
 
-### Evidência
+### Evidência da execução automatizada
 
-![Figura 8 - Execução automatizada dos testes de segurança no GitHub Actions](./Figura%208%20-%20Execução%20automatizada%20dos%20testes%20de%20segurança%20no%20GitHub%20Actions.png)
+A Figura 11 apresenta o resultado da execução do workflow
+GitHub Actions, demonstrando a aprovação dos cinco testes
+automatizados de segurança.
 
-*Figura 8 — Execução automatizada dos testes de segurança.*
+![Figura 11 - Execução automatizada dos testes de segurança no GitHub Actions](./Figura%2011%20-%20Execução%20automatizada%20dos%20testes%20de%20segurança%20no%20GitHub%20Actions.png)
+
+**Figura 11 —** Execução automatizada dos cinco testes
+de segurança no GitHub Actions, com resultado aprovado.
+
+**Arquivos relacionados:**
+
+- [Workflow GitHub Actions](../../.github/workflows/security-tests.yml)
+- [Suíte de testes Pytest](../../backend/tests/test_security.py)
+- [Seed do banco de testes](../../backend/app/db/seed_test.py)
 
 ## 6. Auditoria OWASP ZAP
 
@@ -148,6 +159,35 @@ http://127.0.0.1:8000/openapi.json
 ![Figura 9 - Documentação OpenAPI da API E-ComShield acessível pelo Swagger UI](./Figura%209%20-%20Documentação%20OpenAPI%20da%20API%20E-ComShield%20acessível%20pelo%20Swagger%20UI.png)
 
 *Figura 9 — Interface Swagger UI da API E-ComShield.*
+
+
+### 7.1. Evidências da documentação OpenAPI
+
+A documentação OpenAPI foi validada por meio da interface
+Swagger UI, verificando a disponibilidade dos endpoints,
+os schemas de entrada e saída e os códigos de resposta HTTP.
+
+#### Visão geral dos endpoints
+
+![Figura 12 - Documentação OpenAPI da API E-ComShield acessível pelo Swagger UI](./Figura%2012%20-%20Documentação%20OpenAPI%20da%20API%20E-ComShield%20acessível%20pelo%20Swagger%20UI.png)
+
+**Figura 12 —** Documentação OpenAPI da API E-ComShield,
+apresentando os endpoints disponíveis na interface Swagger UI.
+
+#### Schemas de entrada e saída
+
+![Figura 13 - Validação dos schemas de entrada e saída da especificação OpenAPI](./Figura%2013%20-%20Validação%20dos%20schemas%20de%20entrada%20e%20saída%20da%20especificação%20OpenAPI.png)
+
+**Figura 13 —** Validação dos schemas utilizados na
+documentação dos endpoints da API.
+
+### 7.2. Especificação OpenAPI exportada
+
+A especificação OpenAPI também foi exportada em formato JSON,
+permitindo verificar diretamente os endpoints, parâmetros,
+schemas e respostas documentadas.
+
+[Consultar especificação OpenAPI completa](./openapi-tp3.json)
 
 ## 8. Preparação para pentest
 
