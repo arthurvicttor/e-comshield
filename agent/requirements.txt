@@ -1,0 +1,24 @@
+# Dependências da parte de Dados & IA (TP3 e TP4): EDA, regressão, classificador e agente.
+# Instalar com: pip install -r agent/requirements.txt
+
+# Notebooks (EDA, regressão, classificador)
+pandas==3.0.5
+numpy==2.5.2
+matplotlib==3.11.1
+seaborn==0.13.2
+scipy==1.18.1
+scikit-learn==1.9.1
+joblib==1.6.0
+ipykernel==7.3.0
+nbformat==5.11.1
+nbconvert==7.17.1
+
+# Servidor de demonstração do /classify (agent/demo_classify_server.py)
+fastapi==0.165.0
+uvicorn==0.54.0
+python-jose==3.5.0
+pydantic==2.14.4
+
+# Agente (agent/run_agent.py)
+openai-agents==0.25.0
+httpx==0.28.1
