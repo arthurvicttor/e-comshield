@@ -33,7 +33,13 @@ e-comshield/
 │   ├── 01_eda.ipynb
 │   ├── 02_limpeza.py     # aplica as decisões de limpeza e gera data/processed/
 │   ├── 03_regressao_linear.ipynb   # regressão linear múltipla + resíduos (TP3)
-│   ├── agent.py          # lógica do agente (memória e tool calling) — próxima etapa
+│   ├── 04_classificador_intencao.ipynb   # TF-IDF + SVM, GridSearchCV, métricas (TP4)
+│   ├── models/            # pipeline treinado (intent_classifier.joblib) + metadados
+│   ├── demo_classify_server.py   # servidor de demonstração do endpoint /classify (TP4)
+│   ├── run_agent.py       # agente (OpenAI Agents SDK) que chama o /classify (TP4)
+│   ├── conversa_demo.md   # evidência: conversa real de 3 turnos com o agente (TP4)
+│   ├── requirements.txt   # dependências da parte de Dados & IA
+│   ├── agent.py          # placeholder antigo; a lógica do agente está em run_agent.py
 │   └── data/             # datasets brutos e tratados (não versionados, ver seção "Datasets")
 ├── backend/             # API/backend (Integrante B)
 │   ├── app/
@@ -300,6 +306,26 @@ supervisionada e avaliação adversária de segurança.
   justificativa técnica da abordagem preditiva.
   [Pergunta de classificação](./docs/pergunta-classificacao.md) |
   [Planejamento T2](./docs/planejamento-t2.md)
+
+### TP4 — Classificador e agente (Dados & IA — Integrante A)
+
+- [x] **Treinamento do classificador:** TF-IDF + SVM linear (calibrado), com baseline, matriz de
+  confusão, precision/recall/F1 por classe e ROC-AUC.
+  [Notebook do classificador](./agent/04_classificador_intencao.ipynb) |
+  [Relatório TP4](./docs/relatorio-classificador-tp4.md)
+
+- [x] **GridSearchCV:** 2 hiperparâmetros × 3 valores, melhores parâmetros e ganho documentados.
+  [Notebook do classificador](./agent/04_classificador_intencao.ipynb)
+
+- [x] **Endpoint `/classify`:** contrato implementado e testado em
+  [`agent/demo_classify_server.py`](./agent/demo_classify_server.py) (servidor de demonstração;
+  integração ao backend real é do Integrante B — ver pendência no relatório).
+  [Relatório TP4](./docs/relatorio-classificador-tp4.md)
+
+- [x] **Agente (OpenAI Agents SDK):** `Agent` + `@function_tool` + `Runner.run`, conversa real de
+  3 turnos.
+  [Código do agente](./agent/run_agent.py) |
+  [Conversa de demonstração](./agent/conversa_demo.md)
 
 ### Backend & Application Security — Integrante B
 
