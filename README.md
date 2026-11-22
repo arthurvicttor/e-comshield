@@ -51,6 +51,7 @@ e-comshield/
 │   │   │       ├── auth.py
 │   │   │       ├── predict.py
 │   │   │       └── orders.py
+|   |   |       └── classify.py
 │   │   │
 │   │   ├── core/
 │   │   │   ├── config.py
@@ -70,7 +71,8 @@ e-comshield/
 │   │   │   ├── health.py
 │   │   │   ├── predict.py
 │   │   │   └── order.py
-│   │   │
+|   |   |   └── classify.py
+|   |   |
 │   │   ├── security/
 │   │   │   ├── jwt.py
 │   │   │   ├── password.py
@@ -169,6 +171,11 @@ e-comshield/
 - `POST /auth/token` — autentica o usuário e retorna um token JWT.
 - `POST /predict` — protegida por JWT; recebe a mensagem do usuário e retorna uma resposta placeholder enquanto o Agent não está integrado.
 - `GET /orders/{order_id}` — consulta um pedido autenticado, verificando a propriedade do recurso (BOLA).
+- `POST /classify` — protegida por JWT; classifica a intenção de uma mensagem utilizando o modelo treinado.
+
+O endpoint `/classify` integra o classificador de intenções desenvolvido pela equipe de Dados e IA ao backend FastAPI. A requisição é autenticada por JWT e encaminhada ao pipeline de classificação treinado, baseado em TF-IDF e SVM Linear.
+A implementação utiliza validação de entrada para impedir requisições com tipos incompatíveis, campos inesperados ou textos que não atendam ao contrato definido.
+A documentação interativa da API pode ser acessada em `http://127.0.0.1:8000/docs`, após a inicialização local do backend.
 
 ### Rate Limiting
 
@@ -177,10 +184,70 @@ O endpoint `/auth/token` possui limite de **5 requisições por minuto por ender
 A documentação interativa da API está disponível em:
 `http://127.0.0.1:8000/docs`
 
-### Testes de segurança
-- Para executar os testes automatizados:
-`pytest tests/`
-- A suíte contém testes para autenticação, autorização/BOLA e validação de campos adicionais.
+### Testes automatizados e segurança da API
+
+A segurança do E-ComShield foi implementada considerando princípios de autenticação, autorização, validação de entradas e proteção dos recursos expostos pela API.
+
+**Controles implementados:**
+
+- **Autenticação JWT:** utilização de tokens para proteger endpoints que exigem identificação do usuário.
+- **Autorização por propriedade:** verificação do vínculo entre usuário autenticado e pedido consultado, reduzindo riscos de BOLA/IDOR.
+- **Rate limiting:** restrição de tentativas repetidas de autenticação no endpoint `/auth/token`, com limite configurado de cinco requisições por minuto por endereço IP.
+- **Validação de entrada:** utilização de schemas Pydantic para validar tipos, campos obrigatórios e propriedades adicionais.
+- **Segurança HTTP:** aplicação de políticas de CSP e configuração restritiva de CORS.
+- **Persistência de dados:** PostgreSQL, com modelos relacionais e migrações gerenciadas pelo Alembic.
+
+A implementação é acompanhada por testes automatizados com Pytest, utilizados para verificar autenticação obrigatória, acesso indevido a pedidos, credenciais incorretas, validação de payloads e limitação de requisições.
+
+Para executar os testes localmente, a partir da pasta `backend/`:
+
+```bash
+pytest tests/ -v
+```
+
+O projeto também utiliza um workflow do GitHub Actions para executar os testes em ambiente automatizado, com PostgreSQL, preparação do banco de dados e instalação das dependências necessárias.
+
+**Evidências da execução dos testes:**
+
+![Figura 17 - Execução dos testes automatizados do TP4](./docs/security/Figura%2017%20-%20Execução%20dos%20testes%20automatizados%20do%20TP4%20no%20terminal..png)
+
+![Figura 19 - Testes automatizados de segurança e classificação](./docs/security/Figura%2019%20-%20Execução%20dos%20testes%20automatizados%20de%20segurança%20e%20classificação%20do%20TP4..png)
+
+A documentação técnica das verificações de segurança está disponível em [`docs/security/testes-seguranca.md`](./docs/security/testes-seguranca.md).
+
+### Integração do classificador de intenções ao backend
+
+Durante a evolução do E-ComShield, o backend passou a disponibilizar a classificação de intenções por meio de um endpoint protegido por JWT.
+
+A integração utiliza o modelo treinado pela equipe de Dados e Inteligência Artificial, conectando o pipeline de classificação ao serviço FastAPI.
+
+**Etapas documentadas da integração:**
+
+1. **Validação inicial do endpoint:** identificação de uma resposta HTTP 503 durante a execução do classificador, registrada para diagnóstico.
+2. **Validação do contrato de entrada:** rejeição de campos adicionais e textos vazios, com respostas HTTP 422.
+3. **Classificação operacional:** execução do modelo treinado, retornando HTTP 200 e informações da intenção prevista.
+4. **Verificação de diferentes mensagens:** avaliação de exemplos distintos de intenções no classificador SVM Linear.
+5. **Integração com o agente:** comunicação autenticada entre o agente desenvolvido com OpenAI Agents SDK e o endpoint de classificação.
+
+**Evidências da validação inicial e dos contratos:**
+
+![Figura 14 - Validação inicial do classify com HTTP 503](./docs/security/Figura%2014%20-%20Validação%20do%20endpoint%20classify%20com%20JWT%20e%20retorno%20HTTP%20503..png)
+
+![Figura 15 - Rejeição de campos extras](./docs/security/Figura%2015%20-%20Rejeição%20de%20campos%20extras%20no%20classify%20com%20HTTP%20422..png)
+
+![Figura 16 - Rejeição de texto vazio](./docs/security/Figura%2016%20-%20Rejeição%20de%20texto%20vazio%20no%20classify%20com%20HTTP%20422..png)
+
+**Evidências do classificador em funcionamento:**
+
+![Figura 18 - Classificação autenticada com HTTP 200](./docs/security/Figura%2018%20-%20Classificação%20de%20intenção%20com%20modelo%20treinado%20e%20retorno%20HTTP%20200%20no%20Swagger%20UI..png)
+
+![Figura 20 - Validação de diferentes intenções](./docs/security/Figura%2020%20-%20Validação%20de%20diferentes%20intenções%20pelo%20classificador%20SVM%20Linear..png)
+
+**Evidência da integração entre agente e backend:**
+
+![Figura 23 - Integração autenticada com JWT](./docs/security/Figura%2023%20-%20Integração%20do%20agente%20OpenAI%20Agents%20SDK%20com%20endpoint%20Classify%20autenticado%20por%20JWT.png)
+
+A integração permite que o agente utilize as previsões produzidas pelo modelo treinado por meio de uma interface HTTP autenticada, mantendo a separação entre os componentes de IA e os controles de segurança da API.
 
 ## Datasets
 
@@ -329,38 +396,98 @@ supervisionada e avaliação adversária de segurança.
 
 ### Backend & Application Security — Integrante B
 
-- [x] **Critério 4 — Testes de segurança:**
-  implementação de cinco testes Pytest cobrindo
-  autenticação, BOLA/IDOR, validação de entradas
-  e rate limiting.
-  [Código dos testes](./backend/tests/test_security.py) |
-  [Documentação](./docs/security/testes-seguranca.md)
+O Integrante B foi responsável pelo desenvolvimento e pela evolução da API FastAPI do E-ComShield, incluindo persistência de dados, autenticação, autorização, validação de entradas, controles de segurança, testes automatizados, integração do classificador de intenções e avaliação adversarial de segurança.
 
-- [x] **Critério 5 — GitHub Actions:**
-  pipeline automatizado com PostgreSQL, migrations,
-  seed de testes e execução do Pytest.
-  [Workflow CI/CD](./.github/workflows/security-tests.yml) |
-  [Seed de testes](./backend/app/db/seed_test.py)
+As entregas estão organizadas por critério da rubrica, implementação técnica e evidências, permitindo rastrear cada funcionalidade até o código e os registros de execução.
 
-- [x] **Critério 6 — Execução do Pytest:**
-  cinco testes automatizados aprovados.
-  [Código dos testes](./backend/tests/test_security.py) |
-  [Auditoria final](./docs/security/auditoria-final.md)
+### Integração do classificador de intenções à API
 
-- [x] **Critério 11 — Auditoria OWASP ZAP:**
-  tratamento dos findings Medium/High identificados
-  e realização de novo scan de segurança.
-  [Análise dos findings](./docs/security/analise-zap.md) |
-  [Auditoria final](./docs/security/auditoria-final.md) |
-  [Relatório ZAP TP3](./docs/security/owasp-zap-report-tp3.html)
+- [x] **Critério 1 — Integração do classificador ao FastAPI:**  
+  integração do modelo TF-IDF + SVM Linear ao backend E-ComShield, permitindo classificar mensagens e retornar a intenção prevista e sua confiança.  
+  [Código do backend](./backend/app/) |  
+  [Rotas da API](./backend/app/api/routes/) |  
+  [Modelo treinado](./agent/models/) |  
+  [Notebook de treinamento](./agent/04_classificador_intencao.ipynb)
 
-- [x] **Critério 12 — Documentação OpenAPI:**
-  documentação dos endpoints, parâmetros, autenticação
-  e schemas de entrada e saída.
-  [Configuração FastAPI](./backend/app/main.py) |
-  [Rotas da API](./backend/app/api/routes/) |
-  [Schemas](./backend/app/schemas/) |
-  [Auditoria final](./docs/security/auditoria-final.md)
+- [x] **Critério 2 — Autenticação JWT no endpoint `/classify`:**  
+  proteção do endpoint de classificação, exigindo token JWT válido antes do processamento das requisições.  
+  [Código de autenticação](./backend/app/security/) |  
+  [Dependências da API](./backend/app/api/deps.py) |  
+  [Rotas](./backend/app/api/routes/)
+
+- [x] **Critério 3 — Diagnóstico de indisponibilidade:**  
+  identificação e registro de retorno HTTP 503 durante a integração inicial do classificador, preservando a evidência do diagnóstico.  
+  Evidência: Figura 14.
+
+- [x] **Critério 4 — Validação de entradas:**  
+  verificação da rejeição de campos inesperados e textos vazios, com respostas HTTP 422 conforme o contrato da API.  
+  [Schemas](./backend/app/schemas/) |  
+  [Rotas](./backend/app/api/routes/) |  
+  Evidências: Figuras 15 e 16.
+
+- [x] **Critério 5 — Execução autenticada do classificador:**  
+  validação do endpoint `/classify` no Swagger UI, com respostas HTTP 200 e previsões para diferentes intenções.  
+  [Rotas](./backend/app/api/routes/) |  
+  [Modelo treinado](./agent/models/) |  
+  Evidências: Figuras 18 e 20.
+
+- [x] **Critério 6 — Testes automatizados:**  
+  execução da suíte Pytest após a integração, verificando controles de segurança e funcionalidades de classificação.  
+  [Código dos testes](./backend/tests/) |  
+  Evidências: Figuras 17 e 19.
+
+### Integração entre o agente de IA e o backend autenticado
+
+- [x] **Critério 7 — Comunicação autenticada entre agente e API:**  
+  integração do agente desenvolvido com OpenAI Agents SDK ao backend FastAPI, utilizando `/auth/token` para obtenção de JWT e `/classify` para classificação autenticada.  
+  [Código do agente](./agent/run_agent.py) |  
+  [Autenticação](./backend/app/api/routes/auth.py) |  
+  [Rotas](./backend/app/api/routes/) |  
+  [Contrato de integração](./docs/contrato_agente_backend.md) |  
+  Evidência: Figura 23.
+
+- [x] **Critério 8 — Validação do fluxo integrado:**  
+  demonstração da comunicação entre agente e classificador em três turnos de conversa, utilizando diferentes mensagens de atendimento.  
+  [Código do agente](./agent/run_agent.py) |  
+  [Registro da conversa](./agent/conversa_demo.md) |  
+  Evidências: Figuras 21 e 22.
+
+### Avaliação adversarial de segurança da FintechGuard
+
+- [x] **Critério 9 — Reconhecimento da superfície de ataque:**  
+  identificação de serviços, caminhos e endpoints utilizando Nmap, Gobuster e Kiterunner, com registro da cobertura parcial do reconhecimento.  
+  [Evidências de reconhecimento](./pentest/evidencias/reconhecimento/)
+
+- [x] **Critério 10 — Análise passiva OWASP ZAP:**  
+  inspeção das respostas HTTP e documentação Swagger UI, avaliando alertas de CSP, recursos externos e Subresource Integrity sem presumir vulnerabilidades confirmadas.  
+  [Evidências ZAP](./pentest/evidencias/zap/)
+
+- [x] **Critério 11 — Testes BOLA/IDOR:**  
+  verificação de autorização entre dois usuários Customer, com HTTP 200 para recursos próprios e HTTP 404 nas tentativas de acesso cruzado.  
+  [Evidências BOLA](./pentest/evidencias/bola/)
+
+- [x] **Critério 12 — Testes BFLA:**  
+  avaliação da separação de privilégios entre Customer e Admin, com HTTP 401 para acessos administrativos não autorizados e autenticação administrativa por sessão.  
+  [Evidências BFLA](./pentest/evidencias/bfla/)
+
+- [x] **Critério 13 — Segurança de tokens JWT:**  
+  testes de manipulação de algoritmos JWT e avaliação offline de possíveis segredos HS256, com rejeição dos tokens manipulados por HTTP 401 e ausência de correspondências no dicionário limitado.  
+  [Evidências JWT](./pentest/evidencias/jwt/)
+
+- [x] **Critério 14 — Fuzzing de entradas:**  
+  execução de testes com Wfuzz no endpoint `/classify/`, verificando autenticação e validação de payloads, com retornos HTTP 401, 200 e 422 conforme os cenários.  
+  [Evidências de fuzzing](./pentest/evidencias/fuzzing/)
+
+- [x] **Critério 15 — Enumeração controlada com Burp Intruder:**  
+  execução de cinco requisições para identificadores de tickets, verificando HTTP 200 para recursos próprios e HTTP 404 para os demais identificadores testados.  
+  [Evidências IDOR](./pentest/evidencias/idor/)
+
+- [x] **Critério 16 — Documentação da avaliação adversarial:**  
+  consolidação do escopo autorizado, ferramentas, procedimentos, respostas HTTP, limitações, evidências e recomendações em relatório técnico da FintechGuard.  
+  [Evidências do pentest](./pentest/evidencias/) |  
+  [Aplicação avaliada](https://fintechguard.onrender.com)
+
+  **Observação:** os testes adversariais foram executados contra a FintechGuard, não contra o E-ComShield. Seus resultados não representam validação de segurança do backend E-ComShield.
 
 ### Planejamento do Trimestre 2 — Ambos os integrantes
 
