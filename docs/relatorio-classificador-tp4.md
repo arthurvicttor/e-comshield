@@ -60,12 +60,12 @@ feito nesta etapa por falta de rótulo de intenção nesse dataset (só categori
 ## 2. Endpoint de classificação
 
 O enunciado do TP4 pede `POST /classify`, recebendo um texto e devolvendo a intenção com
-probabilidade, autenticado por JWT. Implementei isso em
-[`agent/demo_classify_server.py`](../agent/demo_classify_server.py) — **um servidor de
-demonstração separado da API de produção** (`backend/`), para eu poder exercitar o classificador e
-o agente de ponta a ponta sem depender de o Integrante B já ter integrado o modelo ao backend real.
+probabilidade, autenticado por JWT. **Esse endpoint já está integrado à API de produção** pelo
+Integrante B, em `backend/app/api/routes/classify.py`, usando o mesmo artefato que eu treinei
+(`backend/app/models_ml/intent-v1.joblib` — confirmei que é byte a byte idêntico ao
+`agent/models/intent_classifier.joblib`).
 
-**Contrato implementado:**
+**Contrato implementado (igual ao que eu havia proposto em `docs/planejamento-t2.md`):**
 
 ```http
 POST /classify
@@ -78,17 +78,20 @@ Content-Type: application/json
 { "intent": "payment_issue", "confidence": 0.98, "model_version": "svm_linear" }
 ```
 
-Pontos cobertos, conforme `docs/planejamento-t2.md` seção 5: modelo carregado uma vez na subida do
-serviço (nunca por requisição), validação de entrada (1–1000 caracteres, `extra="forbid"`),
-autenticação Bearer obrigatória, logging sem o texto completo da mensagem (só tamanho, intenção e
-confiança), e um limiar de confiança (0,30): abaixo dele, a resposta devolve `human_agent` em vez
-de uma intenção arriscada.
+Testei esse endpoint real rodando o backend localmente (SQLite, usuário de teste `user1`): login
+em `/auth/token`, chamada a `/classify` com o token, e a resposta veio correta
+(`track_order`, confiança 0,8416) — ver seção 4 para o fluxo completo pelo agente.
 
-**Pendência explícita para o Integrante B:** este endpoint usa um JWT e uma chave só de
-demonstração (`DEMO_SECRET_KEY`, documentada no próprio arquivo), sem usuários reais nem Postgres.
-Integrar de verdade ao `backend/` (reusar a autenticação, o banco e o padrão de rotas já
-existentes) é trabalho de backend e não foi feito aqui para não mexer nesse código. O artefato
-(`agent/models/intent_classifier.joblib`) e o contrato acima estão prontos para isso.
+**Observação sobre o carregamento do modelo:** o backend carrega o modelo de forma preguiçosa
+(`@lru_cache`, na primeira chamada ao `/classify`), não explicitamente na inicialização da API, e
+os testes automatizados do Arthur usam `monkeypatch` (não exercitam o carregamento real do
+arquivo). Testei manualmente e o carregamento funciona sem erro, mas não há uma prova automatizada
+disso rodando no CI. Vale o Arthur considerar carregar o modelo num evento de `startup` e/ou um
+teste que chame `load_classifier()` de verdade.
+
+Um servidor de demonstração que eu tinha feito antes desse endpoint existir
+([`agent/demo_classify_server.py`](../agent/demo_classify_server.py)) continua no repositório como
+referência, mas não é mais usado pelo agente (seção 4).
 
 ## 3. GridSearchCV
 
@@ -104,21 +107,27 @@ turnos: [`agent/conversa_demo.md`](../agent/conversa_demo.md).
 - **Agent:** `Atendente E-ComShield`, com um *system prompt* para atendimento ao cliente de
   e-commerce (instrui a sempre classificar a intenção antes de responder, nunca inventar status de
   pedido, e escalar para humano quando a confiança for baixa).
-- **`@function_tool`:** `classificar_intencao(texto_do_cliente)` chama `POST /classify` via HTTP
-  (`httpx`), obtendo um token de demonstração e reautenticando uma vez se o token expirar.
+- **`@function_tool`:** `classificar_intencao(texto_do_cliente)` chama o `POST /classify` **da API
+  real** via HTTP (`httpx`), autenticando de verdade em `POST /auth/token` (usuário de teste) e
+  reautenticando uma vez se o token expirar.
 - **`Runner.run`:** usado em loop para manter o histórico entre os 3 turnos (`resultado.to_input_list()`).
 - **Modelo usado:** o SDK é da OpenAI, mas o modelo de linguagem que o agente usa é servido pela
   **Groq** (`openai/gpt-oss-120b`, gratuito, sem cartão, endpoint compatível com a API da OpenAI),
   para não depender de uma chave paga. Basta trocar o cliente e a variável de ambiente para usar a
   OpenAI diretamente — o resto do código (`Agent`, `function_tool`, `Runner`) não muda.
 
-**Resultado real da conversa de demonstração** (texto completo em `agent/conversa_demo.md`):
+**Resultado real da conversa de demonstração, contra o `/classify` da API de produção** (texto
+completo em `agent/conversa_demo.md`; backend rodando localmente, SQLite, usuário de teste
+`user1`):
 
 | Turno | Cliente diz | `/classify` devolveu | Resposta do agente |
 |---|---|---|---|
 | 1 | "Hi, my order hasn't arrived yet, where is it?" | `track_order`, confiança 0,842 | Pede o número do pedido para verificar o status |
-| 2 | "Actually this product arrived damaged, I want my money back." | `damaged_delivery`, confiança 0,666 | Pede desculpas, pede número do pedido e nome do item para iniciar o reembolso |
+| 2 | "Actually this product arrived damaged, I want my money back." | `damaged_delivery`, confiança 0,666 | Pede desculpas, pede número do pedido e, se possível, uma foto do item danificado |
 | 3 | "yes that's right" | (não chamou a ferramenta — mensagem sem conteúdo novo a classificar) | Confirma e repete o pedido de número do pedido |
+
+O log do backend confirma as chamadas reais: um `POST /auth/token` (login) seguido de dois
+`POST /classify`, todos `200 OK` — nenhuma chamada a `/demo-token` ou ao servidor de demonstração.
 
 O agente decidiu sozinho não chamar `classificar_intencao` no 3º turno, por ele não descrever um
 pedido/problema novo — comportamento correto, conforme o *system prompt* ("para CADA mensagem nova

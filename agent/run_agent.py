@@ -1,8 +1,10 @@
 """Agente de atendimento do E-ComShield (TP4), construído com o OpenAI Agents SDK.
 
 O agente recebe mensagens de um cliente e usa a ferramenta `classificar_intencao` para chamar o
-endpoint `POST /classify` (servido por `demo_classify_server.py` nesta etapa — ver o docstring
-daquele arquivo para a diferença entre esta demonstração e a API de produção em `backend/`).
+endpoint `POST /classify` da API **de produção** (`backend/app/api/routes/classify.py`, integrada
+pelo Integrante B), autenticando de verdade via `POST /auth/token`. O servidor de demonstração
+(`demo_classify_server.py`) foi usado só enquanto esse endpoint ainda não existia; ele continua no
+repositório como referência, mas o agente já aponta para a API real por padrão.
 
 O SDK é da OpenAI, mas o modelo usado nesta demonstração é servido pela **Groq** (gratuito, sem
 cartão, compatível com a API da OpenAI), para não depender de uma chave paga. Basta trocar
@@ -10,11 +12,15 @@ cartão, compatível com a API da OpenAI), para não depender de uma chave paga.
 diretamente — o resto do código (Agent, function_tool, Runner) não muda.
 
 Pré-requisitos para rodar:
-    1. Treinar o modelo: executar `04_classificador_intencao.ipynb` (gera `models/intent_classifier.joblib`).
-    2. Subir o servidor de demonstração: `python -m uvicorn demo_classify_server:app --port 8001`
-       (em outro terminal, dentro de `agent/`).
-    3. Definir a variável de ambiente `GROQ_API_KEY` com uma chave grátis de https://console.groq.com/keys.
-    4. `python run_agent.py`
+    1. Ter o modelo treinado e commitado em `backend/app/models_ml/intent-v1.joblib` (gerado por
+       `04_classificador_intencao.ipynb`).
+    2. Subir a API real, dentro de `backend/`: `uvicorn app.main:app --port 8000` (com `.env`
+       configurado e as migrations do Alembic já aplicadas — ver `backend/README.md`).
+    3. Ter um usuário de teste no banco (ex.: `user1` / `user123`, criado por
+       `python -m app.db.seed_test` em CI, ou qualquer usuário seu).
+    4. Definir `GROQ_API_KEY` (grátis em https://console.groq.com/keys) e, se o usuário de teste
+       não for `user1`/`user123`, também `ECOMSHIELD_USERNAME`/`ECOMSHIELD_PASSWORD`.
+    5. `python run_agent.py`
 
 O resultado (os 3+ turnos de conversa) é impresso no terminal e também salvo em
 `conversa_demo.md`, usado como evidência no log do TP4.
@@ -29,8 +35,13 @@ import sys
 import httpx
 from agents import Agent, AsyncOpenAI, OpenAIChatCompletionsModel, Runner, function_tool
 
-CLASSIFY_API_BASE = os.environ.get("CLASSIFY_API_BASE", "http://127.0.0.1:8001")
+# Aponta, por padrão, para a API real (backend/), não mais para o servidor de demonstração.
+CLASSIFY_API_BASE = os.environ.get("CLASSIFY_API_BASE", "http://127.0.0.1:8000")
 GROQ_MODEL = os.environ.get("GROQ_MODEL", "openai/gpt-oss-120b")
+
+# Credenciais de um usuário de teste já existente no banco da API (nunca uma conta real).
+ECOMSHIELD_USERNAME = os.environ.get("ECOMSHIELD_USERNAME", "user1")
+ECOMSHIELD_PASSWORD = os.environ.get("ECOMSHIELD_PASSWORD", "user123")
 
 SYSTEM_PROMPT = """\
 Você é o assistente de atendimento ao cliente da E-ComShield, uma loja de e-commerce.
@@ -53,8 +64,12 @@ confiança devolvidas para guiar sua resposta:
 """
 
 
-def _obter_token_demo() -> str:
-    resposta = httpx.post(f"{CLASSIFY_API_BASE}/demo-token", json={"username": "agente-demo"})
+def _obter_token() -> str:
+    """Autentica no endpoint real da API (`POST /auth/token`, formulário OAuth2 — não JSON)."""
+    resposta = httpx.post(
+        f"{CLASSIFY_API_BASE}/auth/token",
+        data={"username": ECOMSHIELD_USERNAME, "password": ECOMSHIELD_PASSWORD},
+    )
     resposta.raise_for_status()
     return resposta.json()["access_token"]
 
@@ -76,7 +91,7 @@ def classificar_intencao(texto_do_cliente: str) -> str:
     """
     global _TOKEN
     if _TOKEN is None:
-        _TOKEN = _obter_token_demo()
+        _TOKEN = _obter_token()
 
     resposta = httpx.post(
         f"{CLASSIFY_API_BASE}/classify",
@@ -86,7 +101,7 @@ def classificar_intencao(texto_do_cliente: str) -> str:
     )
     if resposta.status_code == 401:
         # token expirado/ inválido: busca um novo e tenta de novo, uma única vez
-        _TOKEN = _obter_token_demo()
+        _TOKEN = _obter_token()
         resposta = httpx.post(
             f"{CLASSIFY_API_BASE}/classify",
             headers={"Authorization": f"Bearer {_TOKEN}"},
