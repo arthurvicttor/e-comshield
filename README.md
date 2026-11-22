@@ -35,9 +35,9 @@ e-comshield/
 │   ├── 03_regressao_linear.ipynb   # regressão linear múltipla + resíduos (TP3)
 │   ├── 04_classificador_intencao.ipynb   # TF-IDF + SVM, GridSearchCV, métricas (TP4)
 │   ├── models/            # pipeline treinado (intent_classifier.joblib) + metadados
-│   ├── demo_classify_server.py   # servidor de demonstração do endpoint /classify (TP4)
-│   ├── run_agent.py       # agente (OpenAI Agents SDK) que chama o /classify (TP4)
-│   ├── conversa_demo.md   # evidência: conversa real de 3 turnos com o agente (TP4)
+│   ├── demo_classify_server.py   # servidor de demonstração do /classify, usado antes de o backend tê-lo (referência)
+│   ├── run_agent.py       # agente (OpenAI Agents SDK) que chama o /classify real do backend (TP4)
+│   ├── conversa_demo.md   # evidência: conversa real de 3 turnos com o agente, contra o backend real (TP4)
 │   ├── requirements.txt   # dependências da parte de Dados & IA
 │   ├── agent.py          # placeholder antigo; a lógica do agente está em run_agent.py
 │   └── data/             # datasets brutos e tratados (não versionados, ver seção "Datasets")
@@ -384,13 +384,13 @@ supervisionada e avaliação adversária de segurança.
 - [x] **GridSearchCV:** 2 hiperparâmetros × 3 valores, melhores parâmetros e ganho documentados.
   [Notebook do classificador](./agent/04_classificador_intencao.ipynb)
 
-- [x] **Endpoint `/classify`:** contrato implementado e testado em
-  [`agent/demo_classify_server.py`](./agent/demo_classify_server.py) (servidor de demonstração;
-  integração ao backend real é do Integrante B — ver pendência no relatório).
+- [x] **Endpoint `/classify`:** integrado à API real pelo Integrante B
+  (`backend/app/api/routes/classify.py`), com o mesmo modelo treinado
+  (`backend/app/models_ml/intent-v1.joblib`).
   [Relatório TP4](./docs/relatorio-classificador-tp4.md)
 
 - [x] **Agente (OpenAI Agents SDK):** `Agent` + `@function_tool` + `Runner.run`, conversa real de
-  3 turnos.
+  3 turnos contra o `/classify` **da API de produção** (login real em `/auth/token`).
   [Código do agente](./agent/run_agent.py) |
   [Conversa de demonstração](./agent/conversa_demo.md)
 
