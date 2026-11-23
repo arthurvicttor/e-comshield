@@ -4,16 +4,16 @@
 
 **Cliente:** Hi, my order hasn't arrived yet, where is it?
 
-**Agente:** I'm sorry to hear your order hasn't arrived yet. Because I don't have direct access to your order details, could you please provide your order number and the email used for the purchase? I will make sure to look into this for you right away.
+**Agente:** I understand that you want to check the status of your order. Could you please provide me with your order number? Once I have that, I can help look into the shipping details for you.
 
 ## Turno 2
 
 **Cliente:** Actually this product arrived damaged, I want my money back.
 
-**Agente:** I am very sorry to hear that your product arrived damaged. Please provide your order number and a few photos of the damage so we can process your refund request. We will make sure to resolve this issue for you as quickly as possible.
+**Agente:** I am sorry to hear that your product arrived damaged. Could you please provide your order number and a photo of the damage? Once I have this information, I can guide you through the refund process.
 
 ## Turno 3
 
 **Cliente:** yes that's right
 
-**Agente:** Thank you for confirming. Could you please share your order number and photos of the damaged product so we can proceed with your refund? We appreciate your patience and are ready to assist you further.
+**Agente:** Thank you for confirming. Could you please share your order number and the photos of the damaged product so we can proceed with your refund?

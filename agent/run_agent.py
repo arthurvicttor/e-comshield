@@ -96,7 +96,7 @@ def classificar_intencao(texto_do_cliente: str) -> str:
             f"{CLASSIFY_API_BASE}/classify",
             headers={"Authorization": f"Bearer {_token}"},
             json={"text": texto_do_cliente},
-            timeout=10,
+            timeout=httpx.Timeout(60.0, connect=10.0),
         )
         print(f"[CLASSIFY] HTTP {resposta.status_code}")
     except Exception as exc:
