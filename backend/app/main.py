@@ -12,6 +12,7 @@ from slowapi.errors import RateLimitExceeded
 from pathlib import Path
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
+from app.api.routes.classify import router as classify_router
 
 from app.core.rate_limit import limiter
 
@@ -106,3 +107,4 @@ app.include_router(health_router)
 app.include_router(auth_router)
 app.include_router(predict_router)
 app.include_router(orders_router)
+app.include_router(classify_router)
